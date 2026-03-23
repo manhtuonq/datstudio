@@ -1,24 +1,1511 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DatPhoto - Chia sẻ ảnh chuyên nghiệp cho studio</title>
-    <meta name="description" content="Tạo album, gửi link, nhận lựa chọn — tất cả trong một quy trình đơn giản, nhanh chóng và chuyên nghiệp.">
-    
-    
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <meta property="og:title" content="DatPhoto - Chia sẻ ảnh chuyên nghiệp cho studio">
-  <meta name="twitter:title" content="DatPhoto - Chia sẻ ảnh chuyên nghiệp cho studio">
-  <meta property="og:description" content="Tạo album, gửi link, nhận lựa chọn — tất cả trong một quy trình đơn giản, nhanh chóng và chuyên nghiệp.">
-  <meta name="twitter:description" content="Tạo album, gửi link, nhận lựa chọn — tất cả trong một quy trình đơn giản, nhanh chóng và chuyên nghiệp.">
-  <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a38b4c78-6d61-4676-a48f-9e61d3818e55/id-preview-eb181159--e1bd7bdf-ecf8-4deb-b0f8-2db31c10c276.lovable.app-1773690064429.png">
-  <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a38b4c78-6d61-4676-a48f-9e61d3818e55/id-preview-eb181159--e1bd7bdf-ecf8-4deb-b0f8-2db31c10c276.lovable.app-1773690064429.png">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuizStrike — Thử Thách Hàng Ngày</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --gold: #F5C842;
+    --gold-dark: #C9A22E;
+    --black: #080808;
+    --black2: #111111;
+    --black3: #1A1A1A;
+    --surface: #1E1E1E;
+    --border: rgba(245,200,66,0.2);
+    --border-dim: rgba(255,255,255,0.07);
+    --white: #F0F0F0;
+    --muted: #666;
+    --green: #2ECC71;
+    --red: #E74C3C;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 16px 40px;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    padding: 20px 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-dim);
+    margin-bottom: 16px;
+  }
+
+  .logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  .logo span { color: var(--gold); }
+
+  .live-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--black3);
+    border: 1px solid rgba(46,204,113,0.4);
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 2px;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+
+  .live-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  /* ─── TICKER ─── */
+  .winner-ticker {
+    background: var(--black3);
+    border: 1px solid var(--border-dim);
+    border-left: 3px solid var(--gold);
+    padding: 9px 14px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .ticker-inner {
+    display: inline-block;
+    animation: ticker 22s linear infinite;
+  }
+
+  @keyframes ticker {
+    0% { transform: translateX(100vw); }
+    100% { transform: translateX(-100%); }
+  }
+
+  .ticker-inner .winner { color: var(--gold); font-weight: 600; }
+
+  /* ─── PRIZE BANNER ─── */
+  .prize-banner {
+    background: var(--black3);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--gold);
+    padding: 24px;
+    text-align: center;
+    margin-bottom: 14px;
+  }
+
+  .prize-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .prize-amount {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 80px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--gold);
+    letter-spacing: -2px;
+  }
+
+  .prize-amount .currency {
+    font-size: 36px;
+    vertical-align: top;
+    margin-top: 14px;
+    display: inline-block;
+    font-weight: 700;
+  }
+
+  .prize-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  .prize-sub strong { color: var(--white); }
+
+  /* ─── COUNTDOWN ─── */
+  .countdown-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .countdown-item {
+    flex: 1;
+    background: var(--black3);
+    border: 1px solid var(--border-dim);
+    padding: 12px 8px;
+    text-align: center;
+  }
+
+  .countdown-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .countdown-lbl {
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 3px;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+
+  /* ─── STATS ─── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .stat-card {
+    background: var(--black3);
+    border: 1px solid var(--border-dim);
+    padding: 12px 10px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .stat-lbl {
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 3px;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+
+  /* ─── NAVIGATION ─── */
+  .bottom-nav {
+    display: flex;
+    gap: 0;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-dim);
+  }
+
+  .nav-btn {
+    flex: 1;
+    padding: 12px 8px;
+    background: var(--black3);
+    border: none;
+    border-right: 1px solid var(--border-dim);
+    color: var(--muted);
+    font-size: 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .nav-btn:last-child { border-right: none; }
+
+  .nav-btn.active {
+    background: var(--gold);
+    color: var(--black);
+  }
+
+  .nav-btn i { display: block; font-size: 16px; margin-bottom: 4px; }
+  .nav-btn:hover:not(.active) { color: var(--gold); }
+
+  /* ─── SCREENS ─── */
+  .screen { display: none; }
+  .screen.active { display: block; animation: fadeUp 0.25s ease; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--black3);
+    border: 1px solid var(--border-dim);
+    padding: 24px;
+    margin-bottom: 14px;
+  }
+
+  .card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  /* ─── STEPS ─── */
+  .steps { display: flex; flex-direction: column; gap: 12px; margin-bottom: 22px; }
+
+  .step { display: flex; align-items: flex-start; gap: 14px; }
+
+  .step-num {
+    width: 30px; height: 30px;
+    background: var(--black);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .step-text { font-size: 14px; color: var(--white); line-height: 1.5; }
+  .step-text span { color: var(--gold); font-weight: 600; }
+
+  /* ─── BUTTONS ─── */
+  .btn-primary {
+    width: 100%;
+    padding: 16px;
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-transform: uppercase;
+  }
+
+  .btn-primary:hover {
+    background: var(--white);
+    transform: translateY(-2px);
+  }
+
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-secondary {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border-dim);
+    font-size: 13px;
+    font-family: 'Barlow', sans-serif;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-top: 8px;
+  }
+
+  .btn-secondary:hover { color: var(--white); border-color: var(--border); }
+
+  /* ─── QUIZ ─── */
+  .quiz-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding: 14px 18px;
+    background: var(--black3);
+    border: 1px solid var(--border-dim);
+  }
+
+  .q-progress { font-size: 13px; color: var(--muted); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 1px; }
+  .q-progress strong { color: var(--gold); }
+
+  .q-timer {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 44px;
+    text-align: right;
+  }
+
+  .q-timer.warning { color: var(--red); animation: blink 0.5s infinite; }
+  @keyframes blink { 50% { opacity: 0.4; } }
+
+  .progress-track {
+    height: 3px;
+    background: var(--black3);
+    margin-bottom: 16px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    transition: width 0.4s ease;
+  }
+
+  .question-card {
+    background: var(--black3);
+    border: 1px solid var(--border-dim);
+    border-top: 2px solid var(--gold);
+    padding: 24px 20px;
+    margin-bottom: 12px;
+  }
+
+  .q-category {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .q-text {
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.55;
+    color: var(--white);
+  }
+
+  .options { display: flex; flex-direction: column; gap: 8px; }
+
+  .option {
+    padding: 14px 18px;
+    background: var(--black3);
+    border: 1px solid var(--border-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 14px;
+    font-family: 'Barlow', sans-serif;
+    color: var(--white);
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .option-letter {
+    width: 26px; height: 26px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    flex-shrink: 0;
+    font-weight: 700;
+  }
+
+  .option:hover:not(.disabled) {
+    border-color: var(--gold);
+    background: rgba(245,200,66,0.05);
+    padding-left: 22px;
+  }
+
+  .option.correct {
+    border-color: var(--green);
+    background: rgba(46,204,113,0.1);
+    color: var(--green);
+  }
+
+  .option.correct .option-letter { border-color: var(--green); color: var(--green); }
+
+  .option.wrong {
+    border-color: var(--red);
+    background: rgba(231,76,60,0.1);
+    color: var(--red);
+  }
+
+  .option.wrong .option-letter { border-color: var(--red); color: var(--red); }
+  .option.disabled { pointer-events: none; }
+
+  /* ─── RESULT ─── */
+  .result-card {
+    background: var(--black3);
+    border: 1px solid var(--border-dim);
+    padding: 32px 24px;
+    text-align: center;
+    margin-bottom: 14px;
+  }
+
+  .result-icon { font-size: 56px; margin-bottom: 14px; color: var(--gold); }
+
+  .result-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .result-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
+
+  .score-display {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-dim);
+  }
+
+  .score-item {
+    flex: 1;
+    padding: 18px 12px;
+    border-right: 1px solid var(--border-dim);
+    text-align: center;
+  }
+
+  .score-item:last-child { border-right: none; }
+
+  .score-big {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 44px;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .score-label {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+
+  .rank-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--black);
+    border: 1px solid var(--border);
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 22px;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px;
+  }
+
+  /* ─── LEADERBOARD ─── */
+  .leaderboard {
+    background: var(--black3);
+    border: 1px solid var(--border-dim);
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+
+  .lb-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border-dim);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--black);
+  }
+
+  .lb-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .lb-tag {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    font-family: 'Barlow Condensed', sans-serif;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .lb-tag .live-dot { width: 5px; height: 5px; }
+
+  .lb-row {
+    display: flex;
+    align-items: center;
+    padding: 13px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.15s;
+    gap: 12px;
+  }
+
+  .lb-row:last-child { border-bottom: none; }
+  .lb-row:hover { background: rgba(255,255,255,0.02); }
+  .lb-row.you { border-left: 3px solid var(--gold); background: rgba(245,200,66,0.04); }
+
+  .lb-rank {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    width: 28px;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .lb-rank.gold { color: #FFD700; font-size: 16px; }
+  .lb-rank.silver { color: #C0C0C0; }
+  .lb-rank.bronze { color: #CD7F32; }
+
+  .lb-avatar {
+    width: 34px; height: 34px;
+    background: var(--black);
+    border: 1px solid var(--border-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .lb-info { flex: 1; min-width: 0; }
+  .lb-name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lb-location { font-size: 11px; color: var(--muted); }
+
+  .lb-score { text-align: right; }
+
+  .lb-points {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .lb-time { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* ─── REFERRAL ─── */
+  .ref-box {
+    background: var(--black);
+    border: 1px solid var(--border);
+    padding: 16px 18px;
+    margin-bottom: 16px;
+  }
+
+  .ref-label {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+
+  .ref-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .ref-code {
+    flex: 1;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 3px;
+  }
+
+  .ref-copy {
+    padding: 8px 14px;
+    background: var(--black3);
+    border: 1px solid var(--border);
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .ref-copy:hover { background: var(--gold); color: var(--black); }
+
+  /* ─── TOAST ─── */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--black3);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 12px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 999;
+    white-space: nowrap;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border-dim);
+    margin: 16px 0;
+  }
+
+  /* ─── ANSWER FEEDBACK ─── */
+  .answer-feedback {
+    display: none;
+    padding: 12px 16px;
+    margin-top: 10px;
+    font-size: 13px;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 700;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .answer-feedback.correct-fb {
+    display: flex;
+    background: rgba(46,204,113,0.08);
+    border: 1px solid rgba(46,204,113,0.3);
+    color: var(--green);
+  }
+
+  .answer-feedback.wrong-fb {
+    display: flex;
+    background: rgba(231,76,60,0.08);
+    border: 1px solid rgba(231,76,60,0.3);
+    color: var(--red);
+  }
+
+  .answer-feedback.timeout-fb {
+    display: flex;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border-dim);
+    color: var(--muted);
+  }
+
+  /* ─── PRIZE DISTRIBUTION ─── */
+  .prize-dist {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .prize-dist-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--black);
+    border: 1px solid var(--border-dim);
+  }
+
+  .prize-dist-row .medal { font-size: 20px; width: 28px; text-align: center; }
+  .prize-dist-row .place { flex: 1; font-size: 14px; font-weight: 600; }
+  .prize-dist-row .pct { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--gold); font-weight: 700; }
+  .prize-dist-row .amount { font-size: 12px; color: var(--muted); margin-left: 4px; }
+
+  /* ─── INFO CHIPS ─── */
+  .info-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    background: var(--black);
+    border: 1px solid var(--border-dim);
+    font-size: 12px;
+    color: var(--muted);
+    margin: 3px;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .info-chip i { color: var(--gold); font-size: 11px; }
+
+  /* ─── SECTION LABEL ─── */
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-dim);
+  }
+
+  /* ─── SCARCITY BAR ─── */
+  .scarcity-bar {
+    background: var(--black3);
+    border: 1px solid var(--border-dim);
+    padding: 10px 14px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+  }
+
+  .scarcity-left { color: var(--muted); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 1px; text-transform: uppercase; }
+  .scarcity-left span { color: var(--gold); font-weight: 700; }
+
+  .scarcity-track {
+    width: 100px;
+    height: 4px;
+    background: var(--black);
+    border: 1px solid var(--border-dim);
+    overflow: hidden;
+  }
+
+  .scarcity-fill {
+    height: 100%;
+    background: var(--gold);
+    transition: width 0.5s ease;
+  }
+</style>
 </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">Quiz<span>Strike</span></div>
+    <div class="live-badge">
+      <div class="live-dot"></div>
+      TRỰC TIẾP
+    </div>
+  </header>
+
+  <!-- TICKER -->
+  <div class="winner-ticker">
+    <div class="ticker-inner">
+      <i class="fas fa-trophy" style="color:var(--gold)"></i>&nbsp;
+      <span class="winner">Minh T. (Hà Nội)</span> thắng 247.000đ &nbsp;·&nbsp;
+      <i class="fas fa-fire" style="color:var(--gold)"></i>&nbsp;
+      <span class="winner">Linh P. (TP.HCM)</span> thắng 89.000đ &nbsp;·&nbsp;
+      <i class="fas fa-bolt" style="color:var(--gold)"></i>&nbsp;
+      <span class="winner">Hoàng N. (Đà Nẵng)</span> thắng 134.000đ &nbsp;·&nbsp;
+      <i class="fas fa-star" style="color:var(--gold)"></i>&nbsp;
+      <span class="winner">Thảo M. (Cần Thơ)</span> thắng 312.000đ &nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+  </div>
+
+  <!-- PRIZE BANNER -->
+  <div class="prize-banner">
+    <div class="prize-label"><i class="fas fa-coins"></i> &nbsp;Tổng Giải Thưởng Hôm Nay</div>
+    <div class="prize-amount"><span class="currency">₫</span><span id="prizePool">847</span><span style="font-size:28px;color:var(--muted);font-weight:400">k</span></div>
+    <div class="prize-sub">Thắng tới <strong>₫<span id="topPrize">423</span>k</strong> — Phí dự thi chỉ <strong>2.000đ</strong></div>
+  </div>
+
+  <!-- COUNTDOWN -->
+  <div class="section-label"><i class="fas fa-clock" style="color:var(--gold)"></i> Thời gian còn lại</div>
+  <div class="countdown-bar">
+    <div class="countdown-item">
+      <div class="countdown-num" id="cd-h">08</div>
+      <div class="countdown-lbl">Giờ</div>
+    </div>
+    <div class="countdown-item">
+      <div class="countdown-num" id="cd-m">34</div>
+      <div class="countdown-lbl">Phút</div>
+    </div>
+    <div class="countdown-item">
+      <div class="countdown-num" id="cd-s">22</div>
+      <div class="countdown-lbl">Giây</div>
+    </div>
+  </div>
+
+  <!-- STATS + SCARCITY -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num" id="playersToday">847</div>
+      <div class="stat-lbl"><i class="fas fa-users"></i> Người chơi</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">200</div>
+      <div class="stat-lbl"><i class="fas fa-ticket-alt"></i> Suất tối đa</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="slotsLeft" style="color:var(--gold)">153</div>
+      <div class="stat-lbl"><i class="fas fa-fire"></i> Suất còn lại</div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div class="bottom-nav">
+    <button class="nav-btn active" onclick="showTab('play')">
+      <i class="fas fa-gamepad"></i>Chơi Ngay
+    </button>
+    <button class="nav-btn" onclick="showTab('leaders')">
+      <i class="fas fa-trophy"></i>Bảng Xếp Hạng
+    </button>
+    <button class="nav-btn" onclick="showTab('invite')">
+      <i class="fas fa-gift"></i>Mời Bạn
+    </button>
+  </div>
+
+  <!-- ══════════════════ TAB: PLAY ══════════════════ -->
+  <div id="tab-play">
+
+    <!-- SCREEN: Entry -->
+    <div id="screen-entry" class="screen active">
+      <div class="card">
+        <div class="card-title"><i class="fas fa-info-circle" style="color:var(--gold)"></i> Cách Chơi</div>
+        <div class="card-desc">Trả lời 10 câu hỏi. Người trả lời nhanh và chính xác nhất sẽ nhận phần thưởng lớn nhất từ quỹ giải thưởng.</div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text">Nạp <span>2.000đ</span> phí tham gia — toàn bộ vào quỹ giải thưởng</div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text">Trả lời <span>10 câu hỏi</span> — mỗi câu có <span>15 giây</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text">Điểm tính theo <span>số câu đúng + tốc độ trả lời</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-text">Top 3 chia <span>50% quỹ giải thưởng</span> vào lúc nửa đêm 🏆</div>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="startQuiz()">
+          <i class="fas fa-play"></i>&nbsp; BẮT ĐẦU — 2.000đ
+        </button>
+        <button class="btn-secondary" onclick="showScreen('screen-howprize')">
+          <i class="fas fa-question-circle"></i>&nbsp; Giải thưởng được chia như thế nào? →
+        </button>
+      </div>
+
+      <!-- chips -->
+      <div style="text-align:center; margin-bottom:16px;">
+        <span class="info-chip"><i class="fas fa-shield-alt"></i> An toàn & minh bạch</span>
+        <span class="info-chip"><i class="fas fa-bolt"></i> Kết quả tức thì</span>
+        <span class="info-chip"><i class="fas fa-wallet"></i> Rút qua MoMo/ZaloPay</span>
+      </div>
+    </div>
+
+    <!-- SCREEN: Quiz -->
+    <div id="screen-quiz" class="screen">
+      <div class="quiz-header">
+        <div class="q-progress">Câu <strong id="q-current">1</strong> / 10</div>
+        <div class="q-timer" id="q-timer">15</div>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="q-progress-fill" style="width:10%"></div>
+      </div>
+      <div class="question-card">
+        <div class="q-category" id="q-category">
+          <i class="fas fa-globe"></i> ĐỊA LÝ
+        </div>
+        <div class="q-text" id="q-text">Đang tải câu hỏi...</div>
+      </div>
+      <div class="options" id="options-container"></div>
+      <div class="answer-feedback" id="answer-feedback"></div>
+    </div>
+
+    <!-- SCREEN: Result -->
+    <div id="screen-result" class="screen">
+      <div class="result-card">
+        <div class="result-icon" id="result-icon"><i class="fas fa-trophy"></i></div>
+        <div class="result-title" id="result-title">XUẤT SẮC!</div>
+        <div class="result-sub" id="result-sub">Bạn đang xếp hạng #3 hôm nay. Kết quả chính thức lúc nửa đêm.</div>
+        <div class="score-display">
+          <div class="score-item">
+            <div class="score-big" id="final-score">7</div>
+            <div class="score-label">Đúng</div>
+          </div>
+          <div class="score-item">
+            <div class="score-big" id="final-points">8.240</div>
+            <div class="score-label">Điểm</div>
+          </div>
+          <div class="score-item">
+            <div class="score-big" id="final-rank">#3</div>
+            <div class="score-label">Hạng</div>
+          </div>
+        </div>
+        <div class="rank-badge" id="rank-badge">
+          <i class="fas fa-medal"></i> Đang trong vùng thưởng!
+        </div>
+
+        <!-- ANSWER SUMMARY -->
+        <div id="answer-summary" style="margin-bottom:18px; text-align:left;"></div>
+
+        <button class="btn-primary" onclick="shareResult()">
+          <i class="fas fa-share-alt"></i>&nbsp; CHIA SẺ & NHẬN LƯỢT CHƠI MIỄN PHÍ
+        </button>
+        <button class="btn-secondary" onclick="resetToEntry()">
+          <i class="fas fa-redo"></i>&nbsp; Chơi Lại Ngày Mai
+        </button>
+      </div>
+    </div>
+
+    <!-- SCREEN: Prize Info -->
+    <div id="screen-howprize" class="screen">
+      <div class="card">
+        <div class="card-title"><i class="fas fa-coins" style="color:var(--gold)"></i> Phân Chia Giải Thưởng</div>
+        <div class="card-desc">50% tổng phí tham gia được trả trực tiếp cho người chơi xuất sắc nhất mỗi ngày.</div>
+        <div class="prize-dist">
+          <div class="prize-dist-row">
+            <div class="medal">🥇</div>
+            <div class="place">Hạng Nhất</div>
+            <div class="pct">25%</div>
+            <div class="amount">~₫<span id="p1">211</span>k</div>
+          </div>
+          <div class="prize-dist-row">
+            <div class="medal">🥈</div>
+            <div class="place">Hạng Nhì</div>
+            <div class="pct">15%</div>
+            <div class="amount">~₫<span id="p2">127</span>k</div>
+          </div>
+          <div class="prize-dist-row">
+            <div class="medal">🥉</div>
+            <div class="place">Hạng Ba</div>
+            <div class="pct">10%</div>
+            <div class="amount">~₫<span id="p3">84</span>k</div>
+          </div>
+          <div class="prize-dist-row">
+            <div class="medal"><i class="fas fa-clock" style="color:var(--muted)"></i></div>
+            <div class="place" style="color:var(--muted); font-size:13px">Thanh toán trong 24h qua MoMo / ZaloPay / Ngân hàng</div>
+            <div></div>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="showScreen('screen-entry')">
+          <i class="fas fa-arrow-left"></i>&nbsp; QUAY LẠI
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════ TAB: LEADERS ══════════════════ -->
+  <div id="tab-leaders" style="display:none;">
+    <div class="leaderboard">
+      <div class="lb-header">
+        <div class="lb-title"><i class="fas fa-trophy"></i>&nbsp; Bảng Xếp Hạng Hôm Nay</div>
+        <div class="lb-tag"><div class="live-dot"></div>Cập nhật mỗi 30s</div>
+      </div>
+      <div id="lb-rows"></div>
+    </div>
+    <div style="text-align:center; padding: 10px 0; font-size:12px; color:var(--muted); font-family:'Barlow Condensed',sans-serif; letter-spacing:1px;">
+      <i class="fas fa-info-circle"></i> Xếp hạng của bạn được cập nhật sau khi chơi xong
+    </div>
+  </div>
+
+  <!-- ══════════════════ TAB: INVITE ══════════════════ -->
+  <div id="tab-invite" style="display:none;">
+    <div class="card">
+      <div class="card-title"><i class="fas fa-gift" style="color:var(--gold)"></i> Mời Bạn — Nhận Lượt Miễn Phí</div>
+      <div class="card-desc">Chia sẻ mã giới thiệu của bạn. Mỗi người bạn tham gia = <strong style="color:var(--gold)">1 lượt chơi miễn phí</strong>.</div>
+      <div class="ref-box">
+        <div class="ref-label"><i class="fas fa-ticket-alt"></i>&nbsp; Mã Giới Thiệu Của Bạn</div>
+        <div class="ref-row">
+          <div class="ref-code">MINH-QS47</div>
+          <div class="ref-copy" onclick="copyCode()"><i class="fas fa-copy"></i>&nbsp; SAO CHÉP</div>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num" style="font-size:14px"><i class="fas fa-users"></i></div>
+          <div class="step-text">Bạn bè đã mời: <span>3 người</span></div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="font-size:14px"><i class="fas fa-ticket-alt"></i></div>
+          <div class="step-text">Lượt chơi miễn phí: <span>3 lượt</span></div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="font-size:14px"><i class="fas fa-wallet"></i></div>
+          <div class="step-text">Tiết kiệm được: <span>6.000đ</span></div>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="shareInvite()">
+        <i class="fas fa-share-alt"></i>&nbsp; CHIA SẺ MÃ CỦA BẠN
+      </button>
+    </div>
+
+    <div class="section-label"><i class="fas fa-chart-bar" style="color:var(--gold)"></i> Thống kê giới thiệu</div>
+    <div class="stats-row" style="margin-bottom:16px;">
+      <div class="stat-card"><div class="stat-num" style="color:var(--gold)">3</div><div class="stat-lbl">Đã mời</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--green)">3</div><div class="stat-lbl">Đã chơi</div></div>
+      <div class="stat-card"><div class="stat-num">6k</div><div class="stat-lbl">Tiết kiệm</div></div>
+    </div>
+  </div>
+
+</div><!-- end container -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="fas fa-check-circle" style="color:var(--gold)"></i>&nbsp; <span id="toast-msg">Đã sao chép!</span></div>
+
+<script>
+// ──────────────────────────────────────────────
+// DATA
+// ──────────────────────────────────────────────
+const questions = [
+  {
+    cat: "ĐỊA LÝ", catIcon: "fa-globe",
+    text: "Thủ đô của nước Úc là gì?",
+    options: ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+    answer: 2
+  },
+  {
+    cat: "KHOA HỌC", catIcon: "fa-flask",
+    text: "Ký hiệu hóa học của Vàng là gì?",
+    options: ["Go", "Gd", "Au", "Ag"],
+    answer: 2
+  },
+  {
+    cat: "LỊCH SỬ", catIcon: "fa-landmark",
+    text: "Chiến tranh Thế giới thứ II kết thúc vào năm nào?",
+    options: ["1943", "1944", "1945", "1946"],
+    answer: 2
+  },
+  {
+    cat: "THỂ THAO", catIcon: "fa-futbol",
+    text: "Một đội bóng đá tiêu chuẩn có bao nhiêu cầu thủ?",
+    options: ["9", "10", "11", "12"],
+    answer: 2
+  },
+  {
+    cat: "CÔNG NGHỆ", catIcon: "fa-laptop-code",
+    text: "'HTTP' là viết tắt của từ gì?",
+    options: ["HyperText Transfer Protocol", "High Tech Transfer Program", "HyperText Transmission Port", "Home Tool Transfer Protocol"],
+    answer: 0
+  },
+  {
+    cat: "ÂM NHẠC", catIcon: "fa-music",
+    text: "Ban nhạc nào phát hành album 'Dark Side of the Moon'?",
+    options: ["Led Zeppelin", "The Beatles", "Pink Floyd", "The Rolling Stones"],
+    answer: 2
+  },
+  {
+    cat: "ẨM THỰC", catIcon: "fa-utensils",
+    text: "Món Sushi có nguồn gốc từ quốc gia nào?",
+    options: ["Trung Quốc", "Hàn Quốc", "Việt Nam", "Nhật Bản"],
+    answer: 3
+  },
+  {
+    cat: "KHOA HỌC", catIcon: "fa-flask",
+    text: "Cơ thể người trưởng thành có bao nhiêu xương?",
+    options: ["196", "206", "216", "226"],
+    answer: 1
+  },
+  {
+    cat: "ĐỊA LÝ", catIcon: "fa-globe",
+    text: "Đại dương nào lớn nhất trên Trái Đất?",
+    options: ["Đại Tây Dương", "Ấn Độ Dương", "Bắc Băng Dương", "Thái Bình Dương"],
+    answer: 3
+  },
+  {
+    cat: "VĂN HỌC", catIcon: "fa-book",
+    text: "Ai là tác giả của tiểu thuyết '1984'?",
+    options: ["Aldous Huxley", "George Orwell", "Ray Bradbury", "H.G. Wells"],
+    answer: 1
+  },
+];
+
+const leaderboardData = [
+  { rank: 1, emoji: "🧑‍💻", name: "Minh T.", loc: "Hà Nội 🏙️", pts: 14820, time: "1p 42g", correct: 10 },
+  { rank: 2, emoji: "👩‍🎓", name: "Thảo M.", loc: "TP.HCM 🌆", pts: 13990, time: "1p 58g", correct: 10 },
+  { rank: 3, emoji: "🧑", name: "Hoàng N.", loc: "Đà Nẵng 🌊", pts: 12750, time: "2p 05g", correct: 9 },
+  { rank: 4, emoji: "👩", name: "Linh P.", loc: "Hải Phòng 🚢", pts: 11200, time: "2p 14g", correct: 9 },
+  { rank: 5, emoji: "🧔", name: "Tuấn A.", loc: "Cần Thơ 🌾", pts: 10880, time: "2p 22g", correct: 8 },
+];
+
+// ──────────────────────────────────────────────
+// STATE
+// ──────────────────────────────────────────────
+let currentQ = 0;
+let score = 0;
+let points = 0;
+let timerInterval = null;
+let timeLeft = 15;
+let answered = false;
+let playerAnswers = []; // track each answer for summary
+
+// ──────────────────────────────────────────────
+// LEADERBOARD
+// ──────────────────────────────────────────────
+function buildLeaderboard() {
+  const container = document.getElementById('lb-rows');
+  container.innerHTML = '';
+  leaderboardData.forEach(p => {
+    const rankClass = p.rank === 1 ? 'gold' : p.rank === 2 ? 'silver' : p.rank === 3 ? 'bronze' : '';
+    const medal = p.rank === 1 ? '<i class="fas fa-crown" style="color:#FFD700"></i>'
+                : p.rank === 2 ? '<i class="fas fa-medal" style="color:#C0C0C0"></i>'
+                : p.rank === 3 ? '<i class="fas fa-medal" style="color:#CD7F32"></i>'
+                : p.rank;
+    container.innerHTML += `
+      <div class="lb-row">
+        <div class="lb-rank ${rankClass}">${medal}</div>
+        <div class="lb-avatar">${p.emoji}</div>
+        <div class="lb-info">
+          <div class="lb-name">${p.name}</div>
+          <div class="lb-location">${p.loc} &nbsp;·&nbsp; ${p.correct}/10 đúng</div>
+        </div>
+        <div class="lb-score">
+          <div class="lb-points">${p.pts.toLocaleString('vi')}</div>
+          <div class="lb-time">${p.time}</div>
+        </div>
+      </div>
+    `;
+  });
+}
+buildLeaderboard();
+
+// ──────────────────────────────────────────────
+// COUNTDOWN
+// ──────────────────────────────────────────────
+function startCountdown() {
+  let total = 8 * 3600 + 34 * 60 + 22;
+  setInterval(() => {
+    total--;
+    if (total < 0) total = 24 * 3600;
+    document.getElementById('cd-h').textContent = String(Math.floor(total / 3600)).padStart(2,'0');
+    document.getElementById('cd-m').textContent = String(Math.floor((total % 3600) / 60)).padStart(2,'0');
+    document.getElementById('cd-s').textContent = String(total % 60).padStart(2,'0');
+  }, 1000);
+}
+startCountdown();
+
+// ──────────────────────────────────────────────
+// PRIZE ANIMATION
+// ──────────────────────────────────────────────
+let pool = 847;
+function animatePrize() {
+  setInterval(() => {
+    pool += Math.floor(Math.random() * 3);
+    document.getElementById('prizePool').textContent = pool;
+    document.getElementById('topPrize').textContent = Math.floor(pool * 0.5);
+    // update prize dist amounts
+    const p = pool;
+    const p1 = document.getElementById('p1'); if(p1) p1.textContent = Math.floor(p * 0.25);
+    const p2 = document.getElementById('p2'); if(p2) p2.textContent = Math.floor(p * 0.15);
+    const p3 = document.getElementById('p3'); if(p3) p3.textContent = Math.floor(p * 0.10);
+  }, 6000);
+}
+animatePrize();
+
+// ──────────────────────────────────────────────
+// SLOTS
+// ──────────────────────────────────────────────
+let slots = 153;
+function animateSlots() {
+  setInterval(() => {
+    if (slots > 5 && Math.random() > 0.65) {
+      slots--;
+      document.getElementById('slotsLeft').textContent = slots;
+      document.getElementById('playersToday').textContent = 847 + (153 - slots);
+    }
+  }, 4000);
+}
+animateSlots();
+
+// ──────────────────────────────────────────────
+// TABS
+// ──────────────────────────────────────────────
+function showTab(tab) {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const tabs = ['play','leaders','invite'];
+  document.querySelectorAll('.nav-btn')[tabs.indexOf(tab)].classList.add('active');
+  document.getElementById('tab-play').style.display    = tab === 'play'    ? 'block' : 'none';
+  document.getElementById('tab-leaders').style.display = tab === 'leaders' ? 'block' : 'none';
+  document.getElementById('tab-invite').style.display  = tab === 'invite'  ? 'block' : 'none';
+}
+
+// ──────────────────────────────────────────────
+// SCREENS
+// ──────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('#tab-play .screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ──────────────────────────────────────────────
+// QUIZ LOGIC
+// ──────────────────────────────────────────────
+function startQuiz() {
+  currentQ = 0;
+  score = 0;
+  points = 0;
+  playerAnswers = [];
+  showScreen('screen-quiz');
+  loadQuestion();
+}
+
+function loadQuestion() {
+  if (currentQ >= questions.length) { endQuiz(); return; }
+
+  answered = false;
+  timeLeft = 15;
+  clearInterval(timerInterval);
+
+  const q = questions[currentQ];
+  const progress = ((currentQ + 1) / questions.length * 100).toFixed(0);
+
+  document.getElementById('q-current').textContent = currentQ + 1;
+  document.getElementById('q-category').innerHTML = `<i class="fas ${q.catIcon}"></i>&nbsp;${q.cat}`;
+  document.getElementById('q-text').textContent = q.text;
+  document.getElementById('q-progress-fill').style.width = progress + '%';
+
+  const timerEl = document.getElementById('q-timer');
+  timerEl.textContent = timeLeft;
+  timerEl.className = 'q-timer';
+
+  // hide feedback
+  const fb = document.getElementById('answer-feedback');
+  fb.className = 'answer-feedback';
+  fb.textContent = '';
+
+  // render options
+  const container = document.getElementById('options-container');
+  container.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.innerHTML = `<span class="option-letter">${letters[i]}</span>${opt}`;
+    btn.onclick = () => selectAnswer(i, q.answer, q.options[q.answer]);
+    container.appendChild(btn);
+  });
+
+  // timer
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    timerEl.textContent = timeLeft;
+    if (timeLeft <= 5) timerEl.className = 'q-timer warning';
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      if (!answered) {
+        answered = true;
+        playerAnswers.push({ q: currentQ, selected: -1, correct: q.answer, isCorrect: false, time: 0 });
+        highlightAnswer(q.answer, -1);
+        showFeedback('timeout', q.options[q.answer]);
+        setTimeout(() => { currentQ++; loadQuestion(); }, 1600);
+      }
+    }
+  }, 1000);
+}
+
+function selectAnswer(selected, correct, correctText) {
+  if (answered) return;
+  answered = true;
+  clearInterval(timerInterval);
+
+  const timeTaken = 15 - timeLeft;
+  const isCorrect = selected === correct;
+
+  playerAnswers.push({ q: currentQ, selected, correct, isCorrect, time: timeTaken });
+
+  if (isCorrect) {
+    score++;
+    points += 1000 + (timeLeft * 80);
+    showFeedback('correct', null, timeTaken);
+  } else {
+    showFeedback('wrong', correctText);
+  }
+
+  highlightAnswer(correct, selected);
+  setTimeout(() => { currentQ++; loadQuestion(); }, 1500);
+}
+
+function highlightAnswer(correct, selected) {
+  const options = document.querySelectorAll('.option');
+  options.forEach((opt, i) => {
+    opt.classList.add('disabled');
+    if (i === correct) opt.classList.add('correct');
+    else if (i === selected && selected !== -1) opt.classList.add('wrong');
+  });
+}
+
+function showFeedback(type, correctText, time) {
+  const fb = document.getElementById('answer-feedback');
+  if (type === 'correct') {
+    const bonus = 1000 + ((15 - time) * 80);
+    fb.className = 'answer-feedback correct-fb';
+    fb.innerHTML = `<i class="fas fa-check-circle"></i> Chính xác! +${bonus.toLocaleString('vi')} điểm`;
+  } else if (type === 'wrong') {
+    fb.className = 'answer-feedback wrong-fb';
+    fb.innerHTML = `<i class="fas fa-times-circle"></i> Sai! Đáp án đúng: <strong style="color:var(--green)">${correctText}</strong>`;
+  } else {
+    fb.className = 'answer-feedback timeout-fb';
+    fb.innerHTML = `<i class="fas fa-clock"></i> Hết giờ! Đáp án đúng: <strong style="color:var(--gold)">${correctText}</strong>`;
+  }
+}
+
+// ──────────────────────────────────────────────
+// END QUIZ
+// ──────────────────────────────────────────────
+function endQuiz() {
+  clearInterval(timerInterval);
+
+  // determine rank
+  const rank = score >= 10 ? '#1'
+             : score >= 9  ? '#2'
+             : score >= 7  ? '#3'
+             : '#' + (Math.floor(Math.random() * 15) + 4);
+
+  const inPrize = ['#1','#2','#3'].includes(rank);
+
+  // icon & title
+  let icon, title;
+  if (score >= 9) { icon = 'fa-trophy'; title = 'XUẤT SẮC!'; }
+  else if (score >= 7) { icon = 'fa-medal'; title = 'RẤT TỐT!'; }
+  else if (score >= 5) { icon = 'fa-star'; title = 'KHÁ TỐT!'; }
+  else { icon = 'fa-flag'; title = 'CỐ GẮNG HƠN!'; }
+
+  document.getElementById('result-icon').innerHTML = `<i class="fas ${icon}"></i>`;
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('final-score').textContent = score;
+  document.getElementById('final-points').textContent = points.toLocaleString('vi');
+  document.getElementById('final-rank').textContent = rank;
+
+  const badge = document.getElementById('rank-badge');
+  if (inPrize) {
+    badge.innerHTML = '<i class="fas fa-crown"></i> Bạn đang trong vùng thưởng!';
+    badge.style.borderColor = 'var(--gold)';
+    badge.style.color = 'var(--gold)';
+  } else {
+    badge.innerHTML = '<i class="fas fa-chart-line"></i> Phấn đấu vào top 3 ngày mai!';
+    badge.style.borderColor = 'rgba(255,255,255,0.1)';
+    badge.style.color = 'var(--muted)';
+  }
+
+  const sub = inPrize
+    ? `Bạn đang xếp ${rank} hôm nay. Kết quả chính thức lúc nửa đêm — chia sẻ để giữ vị trí!`
+    : `Bạn đúng ${score}/10 câu với ${points.toLocaleString('vi')} điểm. Chia sẻ để nhận lượt chơi miễn phí ngày mai!`;
+  document.getElementById('result-sub').textContent = sub;
+
+  // build answer summary
+  buildAnswerSummary();
+
+  showScreen('screen-result');
+}
+
+function buildAnswerSummary() {
+  const container = document.getElementById('answer-summary');
+  container.innerHTML = '';
+
+  const label = document.createElement('div');
+  label.className = 'section-label';
+  label.innerHTML = '<i class="fas fa-list-check" style="color:var(--gold)"></i> Chi tiết câu trả lời';
+  container.appendChild(label);
+
+  playerAnswers.forEach((a, idx) => {
+    const q = questions[a.q];
+    const row = document.createElement('div');
+    row.style.cssText = `display:flex; align-items:center; gap:10px; padding:8px 12px; margin-bottom:4px; background:var(--black); border:1px solid rgba(255,255,255,0.04); font-size:12px;`;
+
+    const numEl = document.createElement('span');
+    numEl.style.cssText = `font-family:'JetBrains Mono',monospace; color:var(--muted); min-width:20px;`;
+    numEl.textContent = (idx + 1) + '.';
+
+    const icon = document.createElement('i');
+    icon.className = a.isCorrect ? 'fas fa-check-circle' : 'fas fa-times-circle';
+    icon.style.color = a.isCorrect ? 'var(--green)' : (a.selected === -1 ? 'var(--muted)' : 'var(--red)');
+    icon.style.fontSize = '14px';
+
+    const text = document.createElement('span');
+    text.style.cssText = 'flex:1; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;';
+    text.textContent = q.text;
+
+    const pts = document.createElement('span');
+    pts.style.cssText = `font-family:'JetBrains Mono',monospace; font-size:11px; color:${a.isCorrect ? 'var(--gold)' : 'var(--muted)'};`;
+    pts.textContent = a.isCorrect ? `+${(1000 + (15 - a.time) * 80).toLocaleString('vi')}` : (a.selected === -1 ? 'HẾT GIỜ' : '+0');
+
+    row.appendChild(numEl);
+    row.appendChild(icon);
+    row.appendChild(text);
+    row.appendChild(pts);
+    container.appendChild(row);
+  });
+}
+
+// ──────────────────────────────────────────────
+// UTILS
+// ──────────────────────────────────────────────
+function resetToEntry() { showScreen('screen-entry'); }
+
+function shareResult() { showToast('🎉 Đã chia sẻ! Bạn nhận được 1 lượt chơi miễn phí!'); }
+function shareInvite() { showToast('📤 Đã sao chép liên kết mời!'); }
+function copyCode()    { showToast('✅ Đã sao chép mã!'); }
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+</script>
+</body>
 </html>
