@@ -201,11 +201,11 @@
             <span class="cat-label">Bảo hiểm<br>xe máy</span>
           </div>
           <div class="cat-btn">
-            <div class="cat-icon" style="background:#FEE2E2;"><i class="fas fa-heartbeat" style="color:#DC2626;font-size:22px;"></i></div>
+            <div class="cat-icon" style="background:#FEE2E2;" onclick="gotoScreen('screen-health')"><i class="fas fa-heartbeat" style="color:#DC2626;font-size:22px;"></i></div>
             <span class="cat-label">Bảo hiểm<br>sức khỏe</span>
           </div>
           <div class="cat-btn">
-            <div class="cat-icon" style="background:#FEF3C7;"><i class="fas fa-graduation-cap" style="color:#D97706;font-size:22px;"></i></div>
+            <div class="cat-icon" style="background:#FEF3C7;" onclick="gotoScreen('screen-student')"><i class="fas fa-graduation-cap" style="color:#D97706;font-size:22px;"></i></div>
             <span class="cat-label">BH toàn diện<br>học sinh</span>
           </div>
         </div>
@@ -712,7 +712,7 @@
     <div class="content-scroll" style="padding:16px;">
       <!-- Two types -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;" class="slide-up">
-        <div class="card" style="cursor:pointer;text-align:center;" onclick="selectMotoProduct('tnds')">
+        <div class="card" style="cursor:pointer;text-align:center;" onclick="goMotoDetail('tnds')">
           <div style="width:52px;height:52px;background:#D1FAE5;border-radius:16px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;">
             <i class="fas fa-motorcycle" style="color:#059669;font-size:22px;"></i>
           </div>
@@ -720,7 +720,7 @@
           <p style="font-size:10px;color:#64748B;line-height:1.4;">Hỗ trợ bồi thường thiệt hại bên thứ 3 khi xảy ra tai nạn</p>
           <p style="font-size:13px;font-weight:700;color:#059669;margin-top:8px;">Từ 49.000đ</p>
         </div>
-        <div class="card" style="cursor:pointer;text-align:center;" onclick="selectMotoProduct('vatchat')">
+        <div class="card" style="cursor:pointer;text-align:center;" onclick="goMotoDetail('vatchat')">
           <div style="width:52px;height:52px;background:#DCFCE7;border-radius:16px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;">
             <i class="fas fa-tools" style="color:#16A34A;font-size:22px;"></i>
           </div>
@@ -1146,6 +1146,714 @@
     </div>
   </div>
 
+  <!-- ==================== SCREEN: MOTORBIKE DETAIL (phạm vi + form) ==================== -->
+  <div class="screen" id="screen-moto-detail">
+    <div style="background:linear-gradient(135deg,#065F46,#059669);padding:44px 20px 20px;flex-shrink:0;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <button onclick="gotoScreen('screen-motorbike')" style="background:rgba(255,255,255,0.2);border:none;width:36px;height:36px;border-radius:50%;color:white;cursor:pointer;"><i class="fas fa-arrow-left"></i></button>
+        <p style="font-size:17px;font-weight:700;color:white;" id="moto-detail-title">BH TNDS Xe Máy</p>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot"></div>
+      </div>
+    </div>
+    <div class="content-scroll" style="padding:16px;">
+
+      <!-- Phạm vi bảo hiểm -->
+      <p style="font-size:13px;font-weight:700;color:#1E293B;margin-bottom:10px;">Lựa chọn phạm vi bảo hiểm</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;">
+        <div class="duration-card" id="dur-1" onclick="selectMotoYear(1)" style="border:2px solid #0EA5E9;border-radius:14px;padding:12px 8px;text-align:center;cursor:pointer;background:#EFF6FF;">
+          <p style="font-size:12px;font-weight:700;color:#1E293B;">1 Năm</p>
+          <p style="font-size:13px;font-weight:800;color:#059669;margin:4px 0;">49.000đ</p>
+          <div style="width:10px;height:10px;background:#EF4444;border-radius:50%;margin:0 auto;"></div>
+        </div>
+        <div class="duration-card" id="dur-2" onclick="selectMotoYear(2)" style="border:2px solid #E2E8F0;border-radius:14px;padding:12px 8px;text-align:center;cursor:pointer;">
+          <p style="font-size:12px;font-weight:700;color:#1E293B;">2 Năm</p>
+          <p style="font-size:13px;font-weight:800;color:#059669;margin:4px 0;">90.000đ</p>
+          <div style="width:10px;height:10px;background:#EF4444;border-radius:50%;margin:0 auto;"></div>
+        </div>
+        <div class="duration-card" id="dur-3" onclick="selectMotoYear(3)" style="border:2px solid #E2E8F0;border-radius:14px;padding:12px 8px;text-align:center;cursor:pointer;">
+          <p style="font-size:12px;font-weight:700;color:#1E293B;">3 Năm</p>
+          <p style="font-size:13px;font-weight:800;color:#059669;margin:4px 0;">126.000đ</p>
+        </div>
+      </div>
+
+      <!-- Add-on: BH tai nạn người ngồi -->
+      <div id="addon-section" style="background:#FFF7ED;border:1.5px solid #FDE68A;border-radius:14px;padding:12px;margin-bottom:14px;">
+        <div style="display:flex;align-items:flex-start;gap:10px;">
+          <div style="width:14px;height:14px;background:#F59E0B;border-radius:3px;flex-shrink:0;margin-top:2px;"></div>
+          <div>
+            <p style="font-size:12px;font-weight:700;color:#92400E;">Bảo hiểm tai nạn người ngồi trên xe</p>
+            <p style="font-size:11px;color:#78350F;margin-top:3px;line-height:1.5;">Phí cho 2 người/năm để được bảo vệ lên đến <span style="font-weight:700;">50.000.000đ</span></p>
+          </div>
+          <div id="addon-toggle" onclick="toggleAddon()" style="width:40px;height:22px;background:#E2E8F0;border-radius:11px;position:relative;cursor:pointer;flex-shrink:0;">
+            <div id="addon-knob" style="width:18px;height:18px;background:white;border-radius:50%;position:absolute;left:2px;top:2px;box-shadow:0 1px 4px rgba(0,0,0,0.2);transition:all 0.2s;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Biển số xe -->
+      <div class="card" style="margin-bottom:14px;">
+        <p style="font-size:13px;font-weight:700;color:#1E293B;margin-bottom:12px;"><i class="fas fa-motorcycle" style="color:#059669;margin-right:6px;"></i>Biển số xe</p>
+        <div style="display:flex;gap:8px;margin-bottom:12px;">
+          <input class="form-input" placeholder="VD: 59B2-12345" style="flex:1;" id="moto-plate">
+          <button style="background:#059669;border:none;border-radius:12px;padding:0 14px;color:white;cursor:pointer;" onclick="showScanModal()">
+            <i class="fas fa-camera"></i>
+          </button>
+        </div>
+
+        <!-- Quét cà vẹt -->
+        <p style="font-size:12px;font-weight:600;color:#475569;margin-bottom:8px;"><i class="fas fa-file-alt" style="margin-right:4px;color:#059669;"></i>Quét cà vẹt để trích xuất thông tin</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+          <div onclick="showScanModal()" style="background:#F0FDF4;border:1.5px dashed #6EE7B7;border-radius:12px;padding:16px 8px;text-align:center;cursor:pointer;">
+            <i class="fas fa-image" style="color:#059669;font-size:20px;margin-bottom:4px;display:block;"></i>
+            <p style="font-size:10px;color:#059669;font-weight:600;">Mặt trước</p>
+          </div>
+          <div style="background:#F8FAFC;border:1.5px dashed #CBD5E1;border-radius:12px;padding:16px 8px;text-align:center;">
+            <i class="fas fa-mobile-alt" style="color:#94A3B8;font-size:20px;margin-bottom:4px;display:block;"></i>
+            <p style="font-size:9px;color:#94A3B8;font-weight:600;">Phase 2<br>Mobile App</p>
+          </div>
+          <div onclick="showScanModal()" style="background:#F0FDF4;border:1.5px dashed #6EE7B7;border-radius:12px;padding:16px 8px;text-align:center;cursor:pointer;">
+            <i class="fas fa-image" style="color:#059669;font-size:20px;margin-bottom:4px;display:block;"></i>
+            <p style="font-size:10px;color:#059669;font-weight:600;">Mặt sau</p>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px;margin:12px 0;">
+          <div style="flex:1;height:1px;background:#E2E8F0;"></div>
+          <span style="font-size:11px;color:#94A3B8;font-weight:600;">HOẶC</span>
+          <div style="flex:1;height:1px;background:#E2E8F0;"></div>
+        </div>
+
+        <!-- Tự điền -->
+        <p style="font-size:12px;font-weight:700;color:#1E293B;margin-bottom:10px;text-align:center;">Tự điền thông tin</p>
+        <div class="form-group">
+          <label class="form-label">Thương hiệu xe máy *</label>
+          <select class="form-input"><option>Honda</option><option>Yamaha</option><option>Suzuki</option><option>SYM</option><option>Piaggio</option></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Dòng xe *</label>
+          <input class="form-input" placeholder="Wave, Vision, Exciter...">
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Phân khối</label>
+          <select class="form-input"><option>Dưới 50cc</option><option>50 - 175cc</option><option>Trên 175cc</option></select>
+        </div>
+      </div>
+
+      <!-- Thông tin chủ xe -->
+      <div class="card" style="margin-bottom:14px;">
+        <p style="font-size:13px;font-weight:700;color:#1E293B;margin-bottom:12px;"><i class="fas fa-user-circle" style="color:#059669;margin-right:6px;"></i>Thông tin chủ xe</p>
+        <div class="form-group"><label class="form-label">Họ và tên *</label><input class="form-input" value="Nguyễn Văn A"></div>
+        <div class="form-group"><label class="form-label">CCCD số *</label><input class="form-input" placeholder="Số CCCD"></div>
+        <div class="form-group"><label class="form-label">Số điện thoại *</label><input class="form-input" value="0901234567"></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" value="nguyenvana@email.com"></div>
+        <div class="form-group"><label class="form-label">Ngày sinh</label><input class="form-input" type="date" value="1990-01-01"></div>
+        <div class="form-group" style="margin-bottom:0;"><label class="form-label">Ngày đăng ký xe</label><input class="form-input" type="date"></div>
+      </div>
+
+      <button class="btn-primary" style="background:linear-gradient(135deg,#059669,#065F46);margin-bottom:10px;" onclick="gotoScreen('screen-order-summary')">
+        Tiếp tục <i class="fas fa-arrow-right" style="margin-left:6px;"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN: HEALTH INSURANCE ==================== -->
+  <div class="screen" id="screen-health">
+    <div style="background:linear-gradient(135deg,#DC2626,#B91C1C);padding:44px 20px 20px;flex-shrink:0;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <button onclick="gotoScreen('screen-home')" style="background:rgba(255,255,255,0.2);border:none;width:36px;height:36px;border-radius:50%;color:white;cursor:pointer;"><i class="fas fa-arrow-left"></i></button>
+        <p style="font-size:17px;font-weight:700;color:white;">Bảo hiểm sức khỏe</p>
+      </div>
+    </div>
+    <div class="content-scroll" style="padding:16px;">
+
+      <!-- Mối quan hệ -->
+      <div class="card" style="margin-bottom:14px;">
+        <p style="font-size:13px;font-weight:700;color:#1E293B;margin-bottom:10px;"><i class="fas fa-users" style="color:#DC2626;margin-right:6px;"></i>Mối quan hệ với người mua bảo hiểm</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <button class="relation-btn" id="rel-banthan" onclick="selectRelation('banthan')" style="border:2px solid #DC2626;border-radius:12px;padding:10px;font-size:12px;font-weight:600;color:#DC2626;background:#FEF2F2;cursor:pointer;">
+            <i class="fas fa-user" style="margin-right:4px;"></i>Bản thân
+          </button>
+          <button class="relation-btn" id="rel-vochong" onclick="selectRelation('vochong')" style="border:2px solid #E2E8F0;border-radius:12px;padding:10px;font-size:12px;font-weight:600;color:#475569;background:white;cursor:pointer;">
+            <i class="fas fa-heart" style="margin-right:4px;"></i>Vợ/Chồng
+          </button>
+          <button class="relation-btn" id="rel-boruot" onclick="selectRelation('boruot')" style="border:2px solid #E2E8F0;border-radius:12px;padding:10px;font-size:12px;font-weight:600;color:#475569;background:white;cursor:pointer;">
+            <i class="fas fa-user-friends" style="margin-right:4px;"></i>Bố/Mẹ ruột
+          </button>
+          <button class="relation-btn" id="rel-conruot" onclick="selectRelation('conruot')" style="border:2px solid #E2E8F0;border-radius:12px;padding:10px;font-size:12px;font-weight:600;color:#475569;background:white;cursor:pointer;">
+            <i class="fas fa-child" style="margin-right:4px;"></i>Con ruột/Con nuôi
+          </button>
+        </div>
+        <div style="margin-top:8px;">
+          <button class="relation-btn" id="rel-anhchi" onclick="selectRelation('anhchi')" style="width:100%;border:2px solid #E2E8F0;border-radius:12px;padding:10px;font-size:12px;font-weight:600;color:#475569;background:white;cursor:pointer;">
+            <i class="fas fa-user-friends" style="margin-right:4px;"></i>Anh/Chị/Em ruột
+          </button>
+        </div>
+        <!-- Note for non-self -->
+        <div id="relation-note" style="display:none;background:#FEF3C7;border-radius:10px;padding:10px;margin-top:10px;">
+          <p style="font-size:11px;color:#92400E;"><i class="fas fa-info-circle" style="margin-right:4px;"></i>Cần cung cấp giấy tờ xác nhận mối quan hệ. Thông tin người được bảo hiểm sẽ hiển thị thêm ở bước sau.</p>
+        </div>
+      </div>
+
+      <!-- Quét CCCD -->
+      <div class="card" style="margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <p style="font-size:13px;font-weight:700;color:#1E293B;"><i class="fas fa-id-card" style="color:#DC2626;margin-right:6px;"></i>Quét CCCD tự động điền</p>
+          <button style="background:#FEE2E2;border:none;border-radius:8px;padding:6px 12px;color:#DC2626;font-size:12px;font-weight:600;cursor:pointer;" onclick="showScanModal()">
+            <i class="fas fa-camera" style="margin-right:4px;"></i>Quét CCCD
+          </button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+          <div onclick="showScanModal()" style="background:#FEF2F2;border:1.5px dashed #FCA5A5;border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;">
+            <i class="fas fa-id-card" style="color:#DC2626;font-size:18px;margin-bottom:4px;display:block;"></i>
+            <p style="font-size:10px;color:#DC2626;font-weight:600;">Mặt trước</p>
+          </div>
+          <div style="background:#F8FAFC;border:1.5px dashed #CBD5E1;border-radius:12px;padding:14px 8px;text-align:center;">
+            <i class="fas fa-mobile-alt" style="color:#94A3B8;font-size:18px;margin-bottom:4px;display:block;"></i>
+            <p style="font-size:9px;color:#94A3B8;font-weight:600;">Phase 2<br>Mobile</p>
+          </div>
+          <div onclick="showScanModal()" style="background:#FEF2F2;border:1.5px dashed #FCA5A5;border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;">
+            <i class="fas fa-id-card" style="color:#DC2626;font-size:18px;margin-bottom:4px;display:block;"></i>
+            <p style="font-size:10px;color:#DC2626;font-weight:600;">Mặt sau</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin:12px 0;">
+          <div style="flex:1;height:1px;background:#E2E8F0;"></div><span style="font-size:11px;color:#94A3B8;font-weight:600;">HOẶC</span><div style="flex:1;height:1px;background:#E2E8F0;"></div>
+        </div>
+        <p style="font-size:12px;font-weight:700;color:#1E293B;margin-bottom:10px;text-align:center;">Tự điền thông tin</p>
+        <div class="form-group"><label class="form-label">Họ và tên *</label><input class="form-input" value="Nguyễn Văn A"></div>
+        <div class="form-group"><label class="form-label">CCCD số *</label><input class="form-input" placeholder="Số CCCD"></div>
+        <div class="form-group"><label class="form-label">Số điện thoại *</label><input class="form-input" value="0901234567"></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" value="nguyenvana@email.com"></div>
+        <div class="form-group"><label class="form-label">Ngày sinh</label><input class="form-input" type="date" value="1990-01-01"></div>
+        <div class="form-group"><label class="form-label">Giới tính</label>
+          <select class="form-input"><option>Nam</option><option>Nữ</option></select>
+        </div>
+        <div class="form-group" style="margin-bottom:0;"><label class="form-label">Địa chỉ</label><input class="form-input" placeholder="Địa chỉ thường trú"></div>
+      </div>
+
+      <!-- Thời hạn bảo hiểm -->
+      <div class="card" style="margin-bottom:14px;">
+        <p style="font-size:13px;font-weight:700;color:#1E293B;margin-bottom:10px;"><i class="fas fa-calendar-alt" style="color:#DC2626;margin-right:6px;"></i>Thời hạn bảo hiểm</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div>
+            <label class="form-label">Ngày bắt đầu</label>
+            <input class="form-input" type="date" value="2025-03-26" style="font-size:12px;">
+            <p style="font-size:10px;color:#94A3B8;margin-top:4px;">Ngày khách khởi tạo</p>
+          </div>
+          <div>
+            <label class="form-label">Ngày kết thúc</label>
+            <input class="form-input" type="date" value="2026-03-26" style="font-size:12px;">
+            <p style="font-size:10px;color:#94A3B8;margin-top:4px;">1 năm sau ngày khởi tạo</p>
+          </div>
+        </div>
+        <div style="background:#EFF6FF;border-radius:10px;padding:10px;margin-top:10px;">
+          <p style="font-size:11px;color:#1D4ED8;"><i class="fas fa-info-circle" style="margin-right:4px;"></i>Trường hợp năm nhuận, kết quả lùi 1 ngày so với năm bình thường</p>
+        </div>
+      </div>
+
+      <!-- Chọn công ty bảo hiểm -->
+      <p style="font-size:13px;font-weight:700;color:#1E293B;margin-bottom:10px;">Lựa chọn công ty bảo hiểm</p>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px;">
+        <div class="insurer-chip" id="ins-bv" onclick="selectInsurer('bv')" style="border:2px solid #DC2626;background:#FEF2F2;border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;">
+          <div style="width:28px;height:28px;background:#DC2626;border-radius:8px;margin:0 auto 4px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-shield-alt" style="color:white;font-size:10px;"></i></div>
+          <p style="font-size:9px;font-weight:700;color:#DC2626;">Bảo Việt</p>
+        </div>
+        <div class="insurer-chip" id="ins-pti" onclick="selectInsurer('pti')" style="border:2px solid #E2E8F0;border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;">
+          <div style="width:28px;height:28px;background:#7C3AED;border-radius:8px;margin:0 auto 4px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-shield-alt" style="color:white;font-size:10px;"></i></div>
+          <p style="font-size:9px;font-weight:700;color:#475569;">PTI</p>
+        </div>
+        <div class="insurer-chip" id="ins-pvi" onclick="selectInsurer('pvi')" style="border:2px solid #E2E8F0;border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;">
+          <div style="width:28px;height:28px;background:#059669;border-radius:8px;margin:0 auto 4px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-shield-alt" style="color:white;font-size:10px;"></i></div>
+          <p style="font-size:9px;font-weight:700;color:#475569;">PVI</p>
+        </div>
+        <div class="insurer-chip" id="ins-bidv" onclick="selectInsurer('bidv')" style="border:2px solid #E2E8F0;border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;">
+          <div style="width:28px;height:28px;background:#0EA5E9;border-radius:8px;margin:0 auto 4px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-shield-alt" style="color:white;font-size:10px;"></i></div>
+          <p style="font-size:9px;font-weight:700;color:#475569;">BIDV</p>
+        </div>
+        <div class="insurer-chip" id="ins-mic" onclick="selectInsurer('mic')" style="border:2px solid #E2E8F0;border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;">
+          <div style="width:28px;height:28px;background:#D97706;border-radius:8px;margin:0 auto 4px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-shield-alt" style="color:white;font-size:10px;"></i></div>
+          <p style="font-size:9px;font-weight:700;color:#475569;">MIC</p>
+        </div>
+      </div>
+
+      <button class="btn-primary" style="background:linear-gradient(135deg,#DC2626,#B91C1C);" onclick="gotoScreen('screen-packages')">
+        Xem gói bảo hiểm <i class="fas fa-arrow-right" style="margin-left:6px;"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN: STUDENT INSURANCE ==================== -->
+  <div class="screen" id="screen-student">
+    <div style="background:linear-gradient(135deg,#D97706,#B45309);padding:44px 20px 20px;flex-shrink:0;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <button onclick="gotoScreen('screen-home')" style="background:rgba(255,255,255,0.2);border:none;width:36px;height:36px;border-radius:50%;color:white;cursor:pointer;"><i class="fas fa-arrow-left"></i></button>
+        <p style="font-size:17px;font-weight:700;color:white;">BH Toàn diện học sinh</p>
+      </div>
+    </div>
+    <div class="content-scroll" style="padding:16px;">
+      <div class="card" style="margin-bottom:14px;">
+        <p style="font-size:13px;font-weight:700;color:#1E293B;margin-bottom:10px;"><i class="fas fa-users" style="color:#D97706;margin-right:6px;"></i>Mối quan hệ với người được hưởng bảo hiểm</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <button onclick="selectStudentRelation(this,'banthan')" style="border:2px solid #D97706;border-radius:12px;padding:10px;font-size:12px;font-weight:600;color:#D97706;background:#FEF3C7;cursor:pointer;"><i class="fas fa-user" style="margin-right:4px;"></i>Bản thân</button>
+          <button onclick="selectStudentRelation(this,'boMe')" style="border:2px solid #E2E8F0;border-radius:12px;padding:10px;font-size:12px;font-weight:600;color:#475569;background:white;cursor:pointer;"><i class="fas fa-user-friends" style="margin-right:4px;"></i>Bố/Mẹ ruột</button>
+          <button onclick="selectStudentRelation(this,'boMeNuoi')" style="border:2px solid #E2E8F0;border-radius:12px;padding:10px;font-size:12px;font-weight:600;color:#475569;background:white;cursor:pointer;"><i class="fas fa-home" style="margin-right:4px;"></i>Bố/Mẹ nuôi</button>
+          <button onclick="selectStudentRelation(this,'anhChi')" style="border:2px solid #E2E8F0;border-radius:12px;padding:10px;font-size:12px;font-weight:600;color:#475569;background:white;cursor:pointer;"><i class="fas fa-user-friends" style="margin-right:4px;"></i>Anh/Chị em ruột</button>
+        </div>
+        <div style="background:#FEF3C7;border-radius:10px;padding:10px;margin-top:10px;">
+          <p style="font-size:11px;color:#92400E;line-height:1.5;"><i class="fas fa-info-circle" style="margin-right:4px;"></i>Bản thân: Trường hợp khách hàng đã ≥15 tuổi, có CCCD, đủ điều kiện để đăng ký tài khoản. Các mối quan hệ khác cần giấy tờ xác nhận.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <p style="font-size:13px;font-weight:700;color:#1E293B;"><i class="fas fa-id-card" style="color:#D97706;margin-right:6px;"></i>Quét CCCD</p>
+          <button style="background:#FEF3C7;border:none;border-radius:8px;padding:6px 12px;color:#D97706;font-size:12px;font-weight:600;cursor:pointer;" onclick="showScanModal()"><i class="fas fa-camera" style="margin-right:4px;"></i>Quét</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+          <div onclick="showScanModal()" style="background:#FFFBEB;border:1.5px dashed #FCD34D;border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;">
+            <i class="fas fa-id-card" style="color:#D97706;font-size:18px;margin-bottom:4px;display:block;"></i>
+            <p style="font-size:10px;color:#D97706;font-weight:600;">Mặt trước</p>
+          </div>
+          <div style="background:#F8FAFC;border:1.5px dashed #CBD5E1;border-radius:12px;padding:14px 8px;text-align:center;">
+            <i class="fas fa-mobile-alt" style="color:#94A3B8;font-size:18px;margin-bottom:4px;display:block;"></i>
+            <p style="font-size:9px;color:#94A3B8;font-weight:600;">Phase 2</p>
+          </div>
+          <div onclick="showScanModal()" style="background:#FFFBEB;border:1.5px dashed #FCD34D;border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;">
+            <i class="fas fa-id-card" style="color:#D97706;font-size:18px;margin-bottom:4px;display:block;"></i>
+            <p style="font-size:10px;color:#D97706;font-weight:600;">Mặt sau</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin:12px 0;">
+          <div style="flex:1;height:1px;background:#E2E8F0;"></div><span style="font-size:11px;color:#94A3B8;font-weight:600;">HOẶC</span><div style="flex:1;height:1px;background:#E2E8F0;"></div>
+        </div>
+        <p style="font-size:12px;font-weight:700;color:#1E293B;margin-bottom:10px;text-align:center;">Tự điền thông tin</p>
+        <div class="form-group"><label class="form-label">Họ và tên *</label><input class="form-input" placeholder="Họ và tên học sinh"></div>
+        <div class="form-group"><label class="form-label">CCCD số *</label><input class="form-input" placeholder="CCCD/Giấy khai sinh"></div>
+        <div class="form-group"><label class="form-label">Số điện thoại *</label><input class="form-input" value="0901234567"></div>
+        <div class="form-group"><label class="form-label">Ngày sinh *</label><input class="form-input" type="date"></div>
+        <div class="form-group"><label class="form-label">Giới tính</label><select class="form-input"><option>Nam</option><option>Nữ</option></select></div>
+        <div class="form-group" style="margin-bottom:0;"><label class="form-label">Địa chỉ</label><input class="form-input" placeholder="Địa chỉ"></div>
+      </div>
+
+      <!-- Thời hạn & Công ty -->
+      <div class="card" style="margin-bottom:14px;">
+        <p style="font-size:13px;font-weight:700;color:#1E293B;margin-bottom:10px;"><i class="fas fa-calendar" style="color:#D97706;margin-right:6px;"></i>Thời hạn bảo hiểm</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+          <div><label class="form-label">Ngày bắt đầu</label><input class="form-input" type="date" value="2025-03-26" style="font-size:12px;"></div>
+          <div><label class="form-label">Ngày kết thúc</label><input class="form-input" type="date" value="2026-03-26" style="font-size:12px;"></div>
+        </div>
+      </div>
+
+      <p style="font-size:13px;font-weight:700;color:#1E293B;margin-bottom:10px;">Lựa chọn công ty bảo hiểm</p>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px;">
+        <div onclick="showToast('Đã chọn Bảo Việt')" style="border:2px solid #D97706;background:#FFFBEB;border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;"><div style="width:28px;height:28px;background:#D97706;border-radius:8px;margin:0 auto 4px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-shield-alt" style="color:white;font-size:10px;"></i></div><p style="font-size:9px;font-weight:700;color:#D97706;">Bảo Việt</p></div>
+        <div onclick="showToast('Đã chọn PTI')" style="border:2px solid #E2E8F0;border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;"><div style="width:28px;height:28px;background:#7C3AED;border-radius:8px;margin:0 auto 4px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-shield-alt" style="color:white;font-size:10px;"></i></div><p style="font-size:9px;font-weight:700;color:#475569;">PTI</p></div>
+        <div onclick="showToast('Đã chọn PVI')" style="border:2px solid #E2E8F0;border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;"><div style="width:28px;height:28px;background:#059669;border-radius:8px;margin:0 auto 4px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-shield-alt" style="color:white;font-size:10px;"></i></div><p style="font-size:9px;font-weight:700;color:#475569;">PVI</p></div>
+        <div onclick="showToast('Đã chọn BIDV')" style="border:2px solid #E2E8F0;border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;"><div style="width:28px;height:28px;background:#0EA5E9;border-radius:8px;margin:0 auto 4px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-shield-alt" style="color:white;font-size:10px;"></i></div><p style="font-size:9px;font-weight:700;color:#475569;">BIDV</p></div>
+        <div onclick="showToast('Đã chọn MIC')" style="border:2px solid #E2E8F0;border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;"><div style="width:28px;height:28px;background:#DC2626;border-radius:8px;margin:0 auto 4px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-shield-alt" style="color:white;font-size:10px;"></i></div><p style="font-size:9px;font-weight:700;color:#475569;">MIC</p></div>
+      </div>
+
+      <button class="btn-primary" style="background:linear-gradient(135deg,#D97706,#B45309);" onclick="gotoScreen('screen-packages')">
+        Xem gói bảo hiểm <i class="fas fa-arrow-right" style="margin-left:6px;"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN: PACKAGES (chọn gói) ==================== -->
+  <div class="screen" id="screen-packages">
+    <div style="background:linear-gradient(135deg,#DC2626,#B91C1C);padding:44px 20px 20px;flex-shrink:0;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
+        <button onclick="history.back()||gotoScreen('screen-health')" style="background:rgba(255,255,255,0.2);border:none;width:36px;height:36px;border-radius:50%;color:white;cursor:pointer;"><i class="fas fa-arrow-left"></i></button>
+        <p style="font-size:17px;font-weight:700;color:white;">Chọn gói bảo hiểm</p>
+      </div>
+    </div>
+    <div class="content-scroll" style="padding:16px;">
+
+      <!-- 3 gói -->
+      <p style="font-size:12px;color:#64748B;margin-bottom:12px;">Chọn gói phù hợp với nhu cầu</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;">
+        <div class="pkg-card" id="pkg-0" onclick="selectPackage(0)" style="border:2px solid #DC2626;border-radius:14px;padding:12px 8px;text-align:center;cursor:pointer;background:#FEF2F2;">
+          <p style="font-size:10px;font-weight:700;color:#94A3B8;margin-bottom:4px;">GÓI</p>
+          <p style="font-size:13px;font-weight:800;color:#DC2626;">Bạch Kim</p>
+          <div style="height:1px;background:#FCA5A5;margin:8px 0;"></div>
+          <p style="font-size:10px;color:#64748B;">Quyền lợi</p>
+          <p style="font-size:12px;font-weight:700;color:#1E293B;">100Tr</p>
+          <div style="height:1px;background:#FCA5A5;margin:8px 0;"></div>
+          <p style="font-size:11px;font-weight:700;color:#DC2626;">450.000đ</p>
+        </div>
+        <div class="pkg-card" id="pkg-1" onclick="selectPackage(1)" style="border:2px solid #E2E8F0;border-radius:14px;padding:12px 8px;text-align:center;cursor:pointer;background:white;position:relative;">
+          <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#F59E0B;color:white;font-size:9px;font-weight:700;padding:2px 10px;border-radius:20px;white-space:nowrap;">PHỔ BIẾN</div>
+          <p style="font-size:10px;font-weight:700;color:#94A3B8;margin-bottom:4px;">GÓI</p>
+          <p style="font-size:13px;font-weight:800;color:#7C3AED;">Kim Cương</p>
+          <div style="height:1px;background:#E2E8F0;margin:8px 0;"></div>
+          <p style="font-size:10px;color:#64748B;">Quyền lợi</p>
+          <p style="font-size:12px;font-weight:700;color:#1E293B;">200Tr</p>
+          <div style="height:1px;background:#E2E8F0;margin:8px 0;"></div>
+          <p style="font-size:11px;font-weight:700;color:#7C3AED;">780.000đ</p>
+        </div>
+        <div class="pkg-card" id="pkg-2" onclick="selectPackage(2)" style="border:2px solid #E2E8F0;border-radius:14px;padding:12px 8px;text-align:center;cursor:pointer;background:white;">
+          <p style="font-size:10px;font-weight:700;color:#94A3B8;margin-bottom:4px;">GÓI</p>
+          <p style="font-size:13px;font-weight:800;color:#D97706;">Vàng</p>
+          <div style="height:1px;background:#E2E8F0;margin:8px 0;"></div>
+          <p style="font-size:10px;color:#64748B;">Quyền lợi</p>
+          <p style="font-size:12px;font-weight:700;color:#1E293B;">350Tr</p>
+          <div style="height:1px;background:#E2E8F0;margin:8px 0;"></div>
+          <p style="font-size:11px;font-weight:700;color:#D97706;">1.250.000đ</p>
+        </div>
+      </div>
+
+      <!-- Tóm tắt quyền lợi -->
+      <div class="card" style="margin-bottom:14px;">
+        <p style="font-size:13px;font-weight:700;color:#1E293B;margin-bottom:12px;"><i class="fas fa-list-ul" style="color:#DC2626;margin-right:6px;"></i>Tóm tắt quyền lợi bảo hiểm</p>
+
+        <!-- Quyền lợi bổ sung (checkbox) -->
+        <div style="background:#F8FAFC;border-radius:10px;padding:10px;margin-bottom:10px;">
+          <p style="font-size:11px;font-weight:700;color:#64748B;margin-bottom:8px;text-transform:uppercase;">Quyền lợi bổ sung</p>
+          <div style="display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;margin-bottom:4px;">
+            <p style="font-size:11px;color:#64748B;font-weight:500;">Cột</p>
+            <p style="font-size:11px;color:#64748B;font-weight:700;text-align:right;">Phí BH</p>
+            <p style="font-size:11px;color:#64748B;font-weight:700;">Chọn</p>
+          </div>
+          <div class="addon-row" style="display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:6px 0;border-top:1px solid #E2E8F0;">
+            <p style="font-size:12px;color:#1E293B;">1. BH tai nạn cá nhân 24/7</p>
+            <p style="font-size:12px;font-weight:600;color:#DC2626;">+50.000đ</p>
+            <div class="check-box" id="addon-1" onclick="toggleCheck('addon-1')"></div>
+          </div>
+          <div class="addon-row" style="display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:6px 0;border-top:1px solid #E2E8F0;">
+            <p style="font-size:12px;color:#1E293B;">2. BH nha khoa cơ bản</p>
+            <p style="font-size:12px;font-weight:600;color:#DC2626;">+80.000đ</p>
+            <div class="check-box" id="addon-2" onclick="toggleCheck('addon-2')"></div>
+          </div>
+          <div class="addon-row" style="display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:6px 0;border-top:1px solid #E2E8F0;">
+            <p style="font-size:12px;color:#1E293B;">3. Thai sản</p>
+            <p style="font-size:12px;font-weight:600;color:#DC2626;">+120.000đ</p>
+            <div class="check-box" id="addon-3" onclick="toggleCheck('addon-3')"></div>
+          </div>
+        </div>
+
+        <!-- Quyền lợi chính -->
+        <p style="font-size:11px;font-weight:700;color:#64748B;margin-bottom:8px;text-transform:uppercase;">Quyền lợi chính</p>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:8px;background:#F8FAFC;border-radius:8px;">
+            <div style="flex:1;">
+              <p style="font-size:12px;font-weight:600;color:#1E293B;">A. Từ vong do ốm đau, bệnh tật</p>
+            </div>
+            <p style="font-size:12px;font-weight:700;color:#DC2626;white-space:nowrap;margin-left:8px;" id="benefit-a">100.000.000đ</p>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:8px;background:#F8FAFC;border-radius:8px;">
+            <div style="flex:1;">
+              <p style="font-size:12px;font-weight:600;color:#1E293B;">B. Từ vong, thương tật toàn bộ vĩnh viễn</p>
+            </div>
+            <p style="font-size:12px;font-weight:700;color:#DC2626;white-space:nowrap;margin-left:8px;" id="benefit-b">100.000.000đ</p>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:8px;background:#F8FAFC;border-radius:8px;">
+            <div style="flex:1;">
+              <p style="font-size:12px;font-weight:600;color:#1E293B;">C. Phẫu thuật do ốm bệnh</p>
+              <p style="font-size:10px;color:#94A3B8;">Tối đa</p>
+            </div>
+            <p style="font-size:12px;font-weight:700;color:#DC2626;white-space:nowrap;margin-left:8px;" id="benefit-c">50.000.000đ</p>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:8px;background:#F8FAFC;border-radius:8px;">
+            <div style="flex:1;">
+              <p style="font-size:12px;font-weight:600;color:#1E293B;">D. Trợ cấp ngày nằm viện</p>
+              <p style="font-size:10px;color:#94A3B8;">Tối đa XXX ngày/năm</p>
+            </div>
+            <p style="font-size:12px;font-weight:700;color:#DC2626;white-space:nowrap;margin-left:8px;" id="benefit-d">500.000đ/ngày</p>
+          </div>
+        </div>
+
+        <!-- Điều khoản loại trừ -->
+        <div style="background:#FEF3C7;border-radius:10px;padding:10px;margin-bottom:10px;">
+          <p style="font-size:11px;font-weight:700;color:#92400E;margin-bottom:4px;"><i class="fas fa-exclamation-triangle" style="margin-right:4px;"></i>ĐIỀU KHOẢN LOẠI TRỪ</p>
+          <p style="font-size:11px;color:#78350F;line-height:1.5;">Không áp dụng cho các trường hợp: bệnh có sẵn, cố ý tự gây thương tích, chiến tranh, thiên tai...</p>
+        </div>
+
+        <!-- Phí & Chọn gói -->
+        <div style="background:linear-gradient(135deg,#FEF2F2,#FFF);border:1.5px solid #FCA5A5;border-radius:12px;padding:12px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+            <span style="font-size:12px;color:#64748B;">Phí bảo hiểm</span>
+            <span style="font-size:13px;font-weight:700;color:#DC2626;" id="pkg-price">450.000đ</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
+            <span style="font-size:12px;color:#64748B;">Tổng phí bảo hiểm</span>
+            <span style="font-size:15px;font-weight:800;color:#DC2626;" id="pkg-total">450.000đ</span>
+          </div>
+          <button style="width:100%;background:linear-gradient(135deg,#DC2626,#B91C1C);color:white;border:none;border-radius:12px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;" id="pkg-btn" onclick="gotoScreen('screen-health-declare')">
+            Chọn gói Bạch Kim
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN: HEALTH DECLARATION ==================== -->
+  <div class="screen" id="screen-health-declare">
+    <div style="background:linear-gradient(135deg,#DC2626,#B91C1C);padding:44px 20px 20px;flex-shrink:0;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
+        <button onclick="gotoScreen('screen-packages')" style="background:rgba(255,255,255,0.2);border:none;width:36px;height:36px;border-radius:50%;color:white;cursor:pointer;"><i class="fas fa-arrow-left"></i></button>
+        <p style="font-size:17px;font-weight:700;color:white;">Khai báo sức khỏe</p>
+      </div>
+    </div>
+    <div class="content-scroll" style="padding:16px;">
+
+      <div class="card" style="margin-bottom:14px;border-left:4px solid #DC2626;">
+        <p style="font-size:13px;color:#1E293B;line-height:1.6;margin-bottom:8px;">
+          Để đảm bảo quyền lợi cho người được bảo hiểm, <strong>Nguyễn Văn A</strong> vui lòng đọc kỹ và trả lời các câu hỏi về sức khỏe sau đây:
+        </p>
+        <div style="background:#FEF3C7;border-radius:8px;padding:8px;">
+          <p style="font-size:11px;color:#92400E;"><i class="fas fa-clock" style="margin-right:4px;"></i>Trong vòng <strong>5 năm</strong> gần đây, người được bảo hiểm đã từng được chẩn đoán, xuất hiện triệu chứng, phải đi khám, điều trị hoặc được khuyên bởi chuyên gia y tế không?</p>
+        </div>
+      </div>
+
+      <!-- Danh sách bệnh -->
+      <div class="card" style="margin-bottom:14px;">
+        <p style="font-size:13px;font-weight:700;color:#1E293B;margin-bottom:12px;"><i class="fas fa-list-ul" style="color:#DC2626;margin-right:6px;"></i>Danh sách bệnh</p>
+        <div style="display:flex;flex-direction:column;gap:8px;" id="disease-list">
+          <div class="disease-item" style="border:1.5px solid #E2E8F0;border-radius:10px;padding:10px;">
+            <p style="font-size:12px;font-weight:600;color:#1E293B;margin-bottom:8px;">1. Tim mạch (nhồi máu cơ tim, rối loạn nhịp tim, suy tim...)</p>
+            <div style="display:flex;gap:12px;">
+              <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;color:#1E293B;">
+                <div style="width:14px;height:14px;background:#EF4444;border-radius:50%;"></div>Có
+              </label>
+              <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;color:#1E293B;" onclick="markDisease(0,'no')">
+                <div style="width:14px;height:14px;background:#EF4444;border-radius:50%;"></div>Không
+              </label>
+            </div>
+          </div>
+          <div class="disease-item" style="border:1.5px solid #E2E8F0;border-radius:10px;padding:10px;">
+            <p style="font-size:12px;font-weight:600;color:#1E293B;margin-bottom:8px;">2. Tiểu đường (type 1, type 2)</p>
+            <div style="display:flex;gap:12px;">
+              <div style="display:flex;align-items:center;gap:6px;cursor:pointer;" onclick="markDisease(1,'yes')">
+                <div id="d1-yes" style="width:16px;height:16px;border:2px solid #E2E8F0;border-radius:50%;transition:all 0.2s;"></div>
+                <span style="font-size:12px;color:#1E293B;">Có</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;cursor:pointer;" onclick="markDisease(1,'no')">
+                <div id="d1-no" style="width:16px;height:16px;background:#EF4444;border-radius:50%;"></div>
+                <span style="font-size:12px;color:#1E293B;">Không</span>
+              </div>
+            </div>
+          </div>
+          <div class="disease-item" style="border:1.5px solid #E2E8F0;border-radius:10px;padding:10px;">
+            <p style="font-size:12px;font-weight:600;color:#1E293B;margin-bottom:8px;">3. Ung thư / khối u</p>
+            <div style="display:flex;gap:12px;">
+              <div style="display:flex;align-items:center;gap:6px;cursor:pointer;" onclick="markDisease(2,'yes')">
+                <div id="d2-yes" style="width:16px;height:16px;border:2px solid #E2E8F0;border-radius:50%;transition:all 0.2s;"></div>
+                <span style="font-size:12px;color:#1E293B;">Có</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;cursor:pointer;" onclick="markDisease(2,'no')">
+                <div id="d2-no" style="width:16px;height:16px;background:#EF4444;border-radius:50%;"></div>
+                <span style="font-size:12px;color:#1E293B;">Không</span>
+              </div>
+            </div>
+          </div>
+          <div class="disease-item" style="border:1.5px solid #E2E8F0;border-radius:10px;padding:10px;">
+            <p style="font-size:12px;font-weight:600;color:#1E293B;margin-bottom:8px;">4. Bệnh về gan (viêm gan, xơ gan...)</p>
+            <div style="display:flex;gap:12px;">
+              <div style="display:flex;align-items:center;gap:6px;cursor:pointer;" onclick="markDisease(3,'yes')">
+                <div id="d3-yes" style="width:16px;height:16px;border:2px solid #E2E8F0;border-radius:50%;transition:all 0.2s;"></div>
+                <span style="font-size:12px;color:#1E293B;">Có</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;cursor:pointer;" onclick="markDisease(3,'no')">
+                <div id="d3-no" style="width:16px;height:16px;background:#EF4444;border-radius:50%;"></div>
+                <span style="font-size:12px;color:#1E293B;">Không</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trả lời CÓ/KHÔNG chính -->
+        <div style="margin-top:16px;">
+          <p style="font-size:13px;font-weight:700;color:#1E293B;margin-bottom:10px;">Câu trả lời tổng quan:</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <button id="btn-yes" onclick="selectHealthAnswer('yes')" style="border:2px solid #E2E8F0;border-radius:12px;padding:14px;font-size:14px;font-weight:700;color:#475569;background:white;cursor:pointer;">
+              <div style="width:12px;height:12px;background:#EF4444;border-radius:50%;margin:0 auto 6px;"></div>Có
+            </button>
+            <button id="btn-no" onclick="selectHealthAnswer('no')" style="border:2px solid #10B981;border-radius:12px;padding:14px;font-size:14px;font-weight:700;color:#10B981;background:#F0FDF4;cursor:pointer;">
+              <div style="width:12px;height:12px;background:#EF4444;border-radius:50%;margin:0 auto 6px;"></div>Không
+            </button>
+          </div>
+        </div>
+
+        <!-- Follow-up if YES -->
+        <div id="health-followup" style="display:none;margin-top:12px;background:#FEF2F2;border-radius:10px;padding:12px;">
+          <p style="font-size:12px;color:#DC2626;font-weight:600;margin-bottom:6px;"><i class="fas fa-exclamation-triangle" style="margin-right:4px;"></i>Bạn vui lòng cho biết thêm:</p>
+          <p style="font-size:11px;color:#7F1D1D;margin-bottom:8px;">Nêu rõ tên bệnh lý đang có nhưng không có trong danh sách, sau đó mới được <strong>TIẾP TỤC</strong></p>
+          <textarea class="form-input" rows="3" placeholder="Mô tả bệnh lý..." style="resize:none;font-size:12px;"></textarea>
+        </div>
+      </div>
+
+      <button class="btn-primary" style="background:linear-gradient(135deg,#DC2626,#B91C1C);" onclick="gotoScreen('screen-order-summary')">
+        Tiếp tục <i class="fas fa-arrow-right" style="margin-left:6px;"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN: ORDER SUMMARY ==================== -->
+  <div class="screen" id="screen-order-summary">
+    <div style="background:linear-gradient(135deg,#0F172A,#1E293B);padding:44px 20px 20px;flex-shrink:0;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
+        <button onclick="history.back()||gotoScreen('screen-car-products')" style="background:rgba(255,255,255,0.15);border:none;width:36px;height:36px;border-radius:50%;color:white;cursor:pointer;"><i class="fas fa-arrow-left"></i></button>
+        <div>
+          <p style="font-size:15px;font-weight:700;color:white;">Kiểm tra thông tin</p>
+          <p style="font-size:11px;color:#94A3B8;">Vui lòng kiểm tra kỹ trước khi thanh toán</p>
+        </div>
+      </div>
+    </div>
+    <div class="content-scroll" style="padding:16px;">
+
+      <!-- Card 1: Thông tin cơ bản -->
+      <div class="card" style="margin-bottom:12px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #F1F5F9;">
+          <div style="width:40px;height:40px;background:#DC2626;border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:700;">BV</div>
+          <div>
+            <p style="font-size:13px;font-weight:700;color:#1E293B;">Bảo Việt - BH Sức khỏe Bạch Kim</p>
+            <span class="badge-green">Đang kiểm tra</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;justify-content:space-between;"><span style="font-size:12px;color:#64748B;">Họ tên khách hàng</span><span style="font-size:12px;font-weight:600;color:#1E293B;">Nguyễn Văn A</span></div>
+          <div style="display:flex;justify-content:space-between;"><span style="font-size:12px;color:#64748B;">Số điện thoại</span><span style="font-size:12px;font-weight:600;">0901234567</span></div>
+          <div style="display:flex;justify-content:space-between;"><span style="font-size:12px;color:#64748B;">Email</span><span style="font-size:12px;font-weight:600;">nguyenvana@email.com</span></div>
+        </div>
+      </div>
+
+      <!-- Card 2: Chi tiết gói -->
+      <div class="card" style="margin-bottom:12px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <div style="width:40px;height:40px;background:#DC2626;border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:700;">BV</div>
+          <div>
+            <p style="font-size:12px;font-weight:700;color:#1E293B;">Bảo Việt - BH Sức khỏe Bạch Kim</p>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;background:#F8FAFC;border-radius:10px;padding:10px;">
+          <div style="display:flex;justify-content:space-between;"><span style="font-size:12px;color:#64748B;">Số tiền bảo hiểm</span><span style="font-size:12px;font-weight:700;color:#DC2626;">100.000.000đ</span></div>
+          <div style="display:flex;justify-content:space-between;"><span style="font-size:12px;color:#64748B;">Công ty bảo hiểm</span><span style="font-size:12px;font-weight:600;">Bảo Việt</span></div>
+          <div style="display:flex;justify-content:space-between;"><span style="font-size:12px;color:#64748B;">Thời hạn</span><span style="font-size:12px;font-weight:600;">26/03/2025 - 26/03/2026</span></div>
+          <div style="display:flex;justify-content:space-between;"><span style="font-size:12px;color:#64748B;">Phí bảo hiểm</span><span style="font-size:12px;font-weight:700;color:#DC2626;">450.000đ</span></div>
+          <div style="height:1px;background:#E2E8F0;"></div>
+          <div style="display:flex;justify-content:space-between;"><span style="font-size:12px;color:#64748B;">Tổng tiền</span><span style="font-size:14px;font-weight:800;color:#DC2626;">450.000đ</span></div>
+          <div style="display:flex;justify-content:space-between;"><span style="font-size:12px;color:#64748B;">Mã ưu đãi</span><span class="badge-green">Không áp dụng</span></div>
+        </div>
+      </div>
+
+      <!-- Cam kết -->
+      <div class="card" style="margin-bottom:12px;border-left:4px solid #DC2626;">
+        <p style="font-size:12px;font-weight:700;color:#1E293B;margin-bottom:8px;"><i class="fas fa-shield-alt" style="color:#DC2626;margin-right:6px;"></i>Cam kết thông tin</p>
+        <p style="font-size:11px;color:#475569;line-height:1.7;margin-bottom:8px;">
+          Tôi cam kết thông tin khai báo là <strong>chính xác, trung thực</strong> và hoàn toàn chịu trách nhiệm về các thông tin đã khai báo. Đồng thời, tôi đã đọc, hiểu rõ và được bên bảo hiểm cung cấp, giải thích rõ ràng, đầy đủ điều kiện bảo hiểm, điều khoản loại trừ bảo trong <strong style="text-decoration:underline;color:#DC2626;">QUY TẮC BẢO HIỂM</strong>.
+        </p>
+        <p style="font-size:11px;color:#DC2626;font-style:italic;line-height:1.6;">
+          Trường hợp thông tin khai báo có sự sai sót, không trung thực, công ty bảo hiểm có quyền từ chối một phần hoặc toàn bộ số tiền bồi thường liên quan.
+        </p>
+        <div style="margin-top:12px;">
+          <div class="check-item" onclick="toggleCheck('confirm-order1')">
+            <div class="check-box checked" id="confirm-order1"><i class="fas fa-check" style="color:white;font-size:10px;"></i></div>
+            <span style="font-size:12px;color:#475569;line-height:1.5;">Tôi cam kết thông tin khai báo là chính xác, trung thực và đầy đủ</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mã giới thiệu -->
+      <div class="card" style="margin-bottom:12px;">
+        <p style="font-size:13px;font-weight:700;color:#1E293B;margin-bottom:10px;"><i class="fas fa-tag" style="color:#10B981;margin-right:6px;"></i>Mã giới thiệu / Mã giảm giá</p>
+        <div style="display:flex;gap:8px;">
+          <input class="form-input" placeholder="Nhập mã..." style="flex:1;" id="promo-input">
+          <button style="background:#10B981;border:none;border-radius:12px;padding:0 16px;color:white;font-size:13px;font-weight:600;cursor:pointer;" onclick="applyPromo()">Áp dụng</button>
+        </div>
+      </div>
+
+      <!-- Tổng phí thanh toán -->
+      <div style="background:#0F172A;border-radius:16px;padding:16px;margin-bottom:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div>
+            <p style="font-size:11px;color:#94A3B8;margin-bottom:4px;">Tổng phí thanh toán</p>
+            <p style="font-size:24px;font-weight:800;color:white;" id="order-total">450.000đ</p>
+            <p style="font-size:11px;color:#94A3B8;">Đã bao gồm mã giảm giá</p>
+          </div>
+          <button style="background:linear-gradient(135deg,#DC2626,#B91C1C);border:none;border-radius:12px;padding:14px 20px;color:white;font-size:14px;font-weight:700;cursor:pointer;" onclick="gotoScreen('screen-final-payment')">
+            Thanh toán <i class="fas fa-arrow-right" style="margin-left:4px;"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN: FINAL PAYMENT ==================== -->
+  <div class="screen" id="screen-final-payment">
+    <div style="background:linear-gradient(135deg,#0F172A,#1E293B);padding:44px 20px 20px;flex-shrink:0;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button onclick="gotoScreen('screen-order-summary')" style="background:rgba(255,255,255,0.15);border:none;width:36px;height:36px;border-radius:50%;color:white;cursor:pointer;"><i class="fas fa-arrow-left"></i></button>
+        <p style="font-size:17px;font-weight:700;color:white;">Hình thức thanh toán</p>
+      </div>
+    </div>
+    <div class="content-scroll" style="padding:16px;">
+
+      <div class="card" style="margin-bottom:14px;">
+        <p style="font-size:13px;font-weight:700;color:#1E293B;margin-bottom:12px;">Chọn hình thức thanh toán</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div onclick="selectFinalPayment('momo')" style="display:flex;align-items:center;gap:12px;padding:14px;border:2px solid #AE2070;border-radius:12px;cursor:pointer;background:#FFF1F8;" id="fpay-momo">
+            <div style="width:40px;height:40px;background:#AE2070;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-wallet" style="color:white;font-size:16px;"></i></div>
+            <div style="flex:1;"><p style="font-size:13px;font-weight:700;color:#1E293B;">Ví MoMo</p><p style="font-size:11px;color:#64748B;">Thanh toán nhanh, an toàn</p></div>
+            <div class="check-box checked" id="fpay-check-momo"><i class="fas fa-check" style="color:white;font-size:10px;"></i></div>
+          </div>
+          <div onclick="selectFinalPayment('zalopay')" style="display:flex;align-items:center;gap:12px;padding:14px;border:2px solid #E2E8F0;border-radius:12px;cursor:pointer;" id="fpay-zalopay">
+            <div style="width:40px;height:40px;background:#0068FF;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-mobile-alt" style="color:white;font-size:16px;"></i></div>
+            <div style="flex:1;"><p style="font-size:13px;font-weight:700;color:#1E293B;">ZaloPay</p><p style="font-size:11px;color:#64748B;">Liên kết ví ZaloPay</p></div>
+            <div class="check-box" id="fpay-check-zalopay"></div>
+          </div>
+          <div onclick="selectFinalPayment('card')" style="display:flex;align-items:center;gap:12px;padding:14px;border:2px solid #E2E8F0;border-radius:12px;cursor:pointer;" id="fpay-card">
+            <div style="width:40px;height:40px;background:#10B981;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-credit-card" style="color:white;font-size:16px;"></i></div>
+            <div style="flex:1;"><p style="font-size:13px;font-weight:700;color:#1E293B;">Thẻ ATM / Thẻ quốc tế</p><p style="font-size:11px;color:#64748B;">Visa, Mastercard, JCB</p></div>
+            <div class="check-box" id="fpay-check-card"></div>
+          </div>
+          <div onclick="selectFinalPayment('bank')" style="display:flex;align-items:center;gap:12px;padding:14px;border:2px solid #E2E8F0;border-radius:12px;cursor:pointer;" id="fpay-bank">
+            <div style="width:40px;height:40px;background:#2563EB;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-university" style="color:white;font-size:16px;"></i></div>
+            <div style="flex:1;"><p style="font-size:13px;font-weight:700;color:#1E293B;">Chuyển khoản ngân hàng</p><p style="font-size:11px;color:#64748B;">Internet Banking</p></div>
+            <div class="check-box" id="fpay-check-bank"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OTP Note -->
+      <div style="background:#EFF6FF;border:1px solid #BAE6FD;border-radius:12px;padding:12px;margin-bottom:14px;">
+        <p style="font-size:12px;color:#1D4ED8;line-height:1.5;"><i class="fas fa-info-circle" style="margin-right:6px;"></i>Hệ thống sẽ gửi mã OTP về <strong>0901234567</strong> để xác nhận thanh toán. Mã OTP có hiệu lực trong 5 phút.</p>
+      </div>
+
+      <!-- Total -->
+      <div style="background:#0F172A;border-radius:16px;padding:16px;display:flex;align-items:center;justify-content:space-between;">
+        <div><p style="font-size:11px;color:#94A3B8;">Tổng thanh toán</p><p style="font-size:22px;font-weight:800;color:white;">450.000đ</p></div>
+        <button style="background:linear-gradient(135deg,#10B981,#059669);border:none;border-radius:12px;padding:14px 22px;color:white;font-size:14px;font-weight:700;cursor:pointer;" onclick="doFinalPayment()">
+          Xác nhận <i class="fas fa-lock" style="margin-left:6px;"></i>
+        </button>
+      </div>
+
+      <!-- After payment: Confirmation -->
+      <div id="payment-confirm-section" style="display:none;margin-top:14px;">
+        <div class="card" style="border-left:4px solid #10B981;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <div style="width:40px;height:40px;background:#DCFCE7;border-radius:50%;display:flex;align-items:center;justify-content:center;"><i class="fas fa-check" style="color:#059669;font-size:18px;"></i></div>
+            <div>
+              <p style="font-size:14px;font-weight:700;color:#1E293B;">Thanh toán thành công!</p>
+              <p style="font-size:11px;color:#64748B;">Kiểm tra hợp đồng để xác nhận</p>
+            </div>
+          </div>
+          <p style="font-size:12px;color:#475569;line-height:1.6;">Hướng dẫn khách hàng quay lại button <strong>Hợp đồng</strong> để kiểm tra thông tin một cách chính xác nhất cùng với chứng nhận bảo hiểm đã cấp.</p>
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <button class="btn-primary" style="flex:1;padding:12px;font-size:13px;" onclick="gotoScreen('screen-contracts')">
+              <i class="fas fa-file-contract" style="margin-right:4px;"></i>Xem hợp đồng
+            </button>
+            <button class="btn-outline" style="flex:1;padding:12px;font-size:13px;" onclick="gotoScreen('screen-home')">Trang chủ</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ==================== MODAL: HOTLINE ==================== -->
   <div class="modal" id="hotline-modal">
     <div class="modal-overlay" onclick="closeModal('hotline-modal')"></div>
@@ -1402,6 +2110,163 @@ function fakeScanResult() {
 function confirmLogout() {
   if (confirm('Bạn có chắc muốn đăng xuất?')) showToast('Đã đăng xuất');
 }
+
+// ==================== MOTO DETAIL ====================
+let addonOn = false;
+function toggleAddon() {
+  addonOn = !addonOn;
+  const toggle = document.getElementById('addon-toggle');
+  const knob = document.getElementById('addon-knob');
+  toggle.style.background = addonOn ? '#10B981' : '#E2E8F0';
+  knob.style.left = addonOn ? '20px' : '2px';
+  showToast(addonOn ? 'Đã thêm BH tai nạn người ngồi' : 'Đã bỏ BH tai nạn người ngồi');
+}
+function selectMotoYear(y) {
+  [1,2,3].forEach(i => {
+    const el = document.getElementById('dur-'+i);
+    el.style.borderColor = '#E2E8F0';
+    el.style.background = 'white';
+  });
+  const sel = document.getElementById('dur-'+y);
+  sel.style.borderColor = '#059669';
+  sel.style.background = '#F0FDF4';
+}
+function selectMotoProduct(type) {
+  document.getElementById('moto-info-section').style.display = 'block';
+}
+// Override motorbike flow: detail screen
+function goMotoDetail(type) {
+  document.getElementById('moto-detail-title').textContent = type === 'tnds' ? 'BH TNDS Xe Máy' : 'BH Vật chất Xe Máy';
+  gotoScreen('screen-moto-detail');
+}
+
+// ==================== HEALTH ====================
+function selectRelation(rel) {
+  document.querySelectorAll('.relation-btn').forEach(b => {
+    b.style.borderColor = '#E2E8F0';
+    b.style.background = 'white';
+    b.style.color = '#475569';
+  });
+  const el = document.getElementById('rel-' + rel);
+  if (el) {
+    el.style.borderColor = '#DC2626';
+    el.style.background = '#FEF2F2';
+    el.style.color = '#DC2626';
+  }
+  const note = document.getElementById('relation-note');
+  if (note) note.style.display = rel === 'banthan' ? 'none' : 'block';
+}
+function selectInsurer(id) {
+  document.querySelectorAll('.insurer-chip').forEach(el => {
+    el.style.borderColor = '#E2E8F0';
+    el.style.background = 'white';
+  });
+  const el = document.getElementById('ins-' + id);
+  if (el) { el.style.borderColor = '#DC2626'; el.style.background = '#FEF2F2'; }
+  showToast('Đã chọn công ty bảo hiểm');
+}
+function selectStudentRelation(btn, rel) {
+  document.querySelectorAll('#screen-student button[onclick^="selectStudentRelation"]').forEach(b => {
+    b.style.borderColor = '#E2E8F0'; b.style.background = 'white'; b.style.color = '#475569';
+  });
+  btn.style.borderColor = '#D97706'; btn.style.background = '#FEF3C7'; btn.style.color = '#D97706';
+}
+
+// ==================== PACKAGES ====================
+const pkgData = [
+  { name:'Bạch Kim', price:'450.000đ', benefitA:'100.000.000đ', benefitB:'100.000.000đ', benefitC:'50.000.000đ', benefitD:'500.000đ/ngày', color:'#DC2626' },
+  { name:'Kim Cương', price:'780.000đ', benefitA:'200.000.000đ', benefitB:'200.000.000đ', benefitC:'100.000.000đ', benefitD:'700.000đ/ngày', color:'#7C3AED' },
+  { name:'Vàng', price:'1.250.000đ', benefitA:'350.000.000đ', benefitB:'350.000.000đ', benefitC:'200.000.000đ', benefitD:'1.000.000đ/ngày', color:'#D97706' },
+];
+function selectPackage(idx) {
+  [0,1,2].forEach(i => {
+    const el = document.getElementById('pkg-'+i);
+    el.style.borderColor = '#E2E8F0'; el.style.background = 'white';
+  });
+  const el = document.getElementById('pkg-'+idx);
+  el.style.borderColor = pkgData[idx].color; el.style.background = idx===0?'#FEF2F2':idx===1?'#F5F3FF':'#FFFBEB';
+  document.getElementById('benefit-a').textContent = pkgData[idx].benefitA;
+  document.getElementById('benefit-b').textContent = pkgData[idx].benefitB;
+  document.getElementById('benefit-c').textContent = pkgData[idx].benefitC;
+  document.getElementById('benefit-d').textContent = pkgData[idx].benefitD;
+  document.getElementById('pkg-price').textContent = pkgData[idx].price;
+  document.getElementById('pkg-total').textContent = pkgData[idx].price;
+  document.getElementById('pkg-btn').textContent = 'Chọn gói ' + pkgData[idx].name;
+  document.getElementById('pkg-btn').style.background = `linear-gradient(135deg,${pkgData[idx].color},${pkgData[idx].color}CC)`;
+}
+
+// ==================== HEALTH DECLARE ====================
+function markDisease(idx, val) {
+  const yes = document.getElementById('d'+idx+'-yes');
+  const no = document.getElementById('d'+idx+'-no');
+  if (!yes || !no) return;
+  yes.style.background = val==='yes' ? '#DC2626' : 'white';
+  yes.style.borderColor = val==='yes' ? '#DC2626' : '#E2E8F0';
+  no.style.background = val==='no' ? '#EF4444' : 'white';
+  no.style.borderColor = val==='no' ? '#EF4444' : '#E2E8F0';
+}
+function selectHealthAnswer(ans) {
+  const btnY = document.getElementById('btn-yes');
+  const btnN = document.getElementById('btn-no');
+  const followup = document.getElementById('health-followup');
+  btnY.style.borderColor = ans==='yes' ? '#DC2626' : '#E2E8F0';
+  btnY.style.color = ans==='yes' ? '#DC2626' : '#475569';
+  btnY.style.background = ans==='yes' ? '#FEF2F2' : 'white';
+  btnN.style.borderColor = ans==='no' ? '#10B981' : '#E2E8F0';
+  btnN.style.color = ans==='no' ? '#10B981' : '#475569';
+  btnN.style.background = ans==='no' ? '#F0FDF4' : 'white';
+  followup.style.display = ans==='yes' ? 'block' : 'none';
+}
+
+// ==================== ORDER SUMMARY ====================
+function applyPromo() {
+  const code = document.getElementById('promo-input').value.toUpperCase();
+  if (code === 'GIAM10') {
+    document.getElementById('order-total').textContent = '405.000đ';
+    showToast('✓ Áp dụng mã thành công! Giảm 10%');
+  } else if (code) {
+    showToast('Mã không hợp lệ');
+  }
+}
+
+// ==================== FINAL PAYMENT ====================
+let selectedFinalPay = 'momo';
+function selectFinalPayment(method) {
+  ['momo','zalopay','card','bank'].forEach(m => {
+    const card = document.getElementById('fpay-'+m);
+    const chk = document.getElementById('fpay-check-'+m);
+    card.style.borderColor = '#E2E8F0';
+    card.style.background = 'white';
+    chk.classList.remove('checked');
+    chk.innerHTML = '';
+  });
+  selectedFinalPay = method;
+  const colors = {momo:'#AE2070',zalopay:'#0068FF',card:'#10B981',bank:'#2563EB'};
+  const card = document.getElementById('fpay-'+method);
+  card.style.borderColor = colors[method];
+  const bg = {momo:'#FFF1F8',zalopay:'#EFF6FF',card:'#F0FDF4',bank:'#DBEAFE'};
+  card.style.background = bg[method];
+  const chk = document.getElementById('fpay-check-'+method);
+  chk.classList.add('checked');
+  chk.innerHTML = '<i class="fas fa-check" style="color:white;font-size:10px;"></i>';
+}
+function doFinalPayment() {
+  showToast('Đang xử lý...');
+  setTimeout(() => {
+    document.getElementById('payment-confirm-section').style.display = 'block';
+    showToast('✓ Thanh toán thành công!');
+  }, 1500);
+}
+
+// Wire home categories to new screens
+document.addEventListener('DOMContentLoaded', () => {
+  // Health & student
+  const cats = document.querySelectorAll('#categories .cat-btn');
+  if (cats[2]) cats[2].onclick = () => gotoScreen('screen-health');
+  if (cats[3]) cats[3].onclick = () => gotoScreen('screen-student');
+  // Motorbike detail override
+  const motos = document.querySelectorAll('#screen-motorbike .cat-btn, #screen-motorbike [onclick]');
+});
 </script>
 </body>
 </html>
